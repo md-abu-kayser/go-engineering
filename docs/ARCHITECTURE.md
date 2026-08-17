@@ -3655,3 +3655,13 @@ debug, secure, optimize, and operate real systems.
 > **Learn the language. Understand the runtime. Practice the engineering. Build the systems. Study the failures. Explain the trade-offs.**
 
 That is the purpose of this repository.
+
+<div align="center">
+
+**Made with ❤️ for the Go Community**
+
+_"Don't just write code. Write code that tells the story of your solution." — Go Proverbs_
+
+[⬆ back to top](#-go-engineering)
+
+</div>
