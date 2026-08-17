@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+./scripts/count-go.sh
+gofmt -l .
+go vet ./...
+go test ./...

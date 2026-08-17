@@ -1,0 +1,12 @@
+# Go
+bin/
+coverage.out
+coverage.html
+*.prof
+*.test
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

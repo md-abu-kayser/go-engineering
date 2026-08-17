@@ -1,0 +1,18 @@
+# Parallel Speedup
+
+**Level:** 14 — Performance & Optimization
+**Lesson:** 40
+
+## Objective
+
+Understand and practice **Parallel Speedup** as an isolated engineering concept.
+
+## Run
+
+```bash
+go run .
+```
+
+## Engineering note
+
+Keep the example small, deterministic, and easy to change. The point is to build durable mental models, not to memorize syntax.

@@ -1,0 +1,18 @@
+# Functional Core Imperative Shell
+
+**Level:** 11 — Design Patterns
+**Lesson:** 54
+
+## Objective
+
+Understand and practice **Functional Core Imperative Shell** as an isolated engineering concept.
+
+## Run
+
+```bash
+go run .
+```
+
+## Engineering note
+
+Keep the example small, deterministic, and easy to change. The point is to build durable mental models, not to memorize syntax.
