@@ -1,3 +1,3 @@
-module github.com/md-abu-kayser/go-engineering-1111
+module github.com/md-abu-kayser/go-engineering
 
 go 1.26
