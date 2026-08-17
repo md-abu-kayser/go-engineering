@@ -1,3 +1,7 @@
+// This test file lives in the same package as main.go, which means it can
+// call collectEnvInfo() directly even though that function is unexported
+// (lowercase). This is a common Go pattern: tests live right next to the
+// code they test, in the same package.
 package main
 
 import (
@@ -6,6 +10,9 @@ import (
 	"testing"
 )
 
+// TestCollectEnvInfo checks that the values returned by collectEnvInfo()
+// line up with what the runtime package reports directly. This is mostly
+// a sanity check that our wrapper struct isn't losing or mangling data.
 func TestCollectEnvInfo(t *testing.T) {
 	info := collectEnvInfo()
 
@@ -34,3 +41,10 @@ func TestCollectEnvInfo(t *testing.T) {
 	}
 }
 
+// Run this test with:
+//
+//	go test ./...
+//
+// or, for verbose output showing each test name:
+//
+//	go test -v ./...
