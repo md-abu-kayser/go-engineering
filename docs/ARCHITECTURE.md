@@ -2,7 +2,7 @@
 
 > **A production-oriented Go engineering ecosystem designed to take a developer from absolute beginner to expert-level professional Go engineering.**
 
-This document defines the architectural philosophy, directory structure, naming conventions, dependency boundaries, learning model, project organization, quality standards, and long-term scalability rules of the repository.
+This document defines the architectural philosophy, directory structure, naming conventions, dependency boundaries, learning model, lesson standards, project organization, quality standards, verification rules, metadata model, and long-term scalability rules of the repository.
 
 The repository is intentionally designed to feel less like a conventional programming tutorial and more like a combination of:
 
@@ -12,44 +12,91 @@ The repository is intentionally designed to feel less like a conventional progra
 - Standard Library Reference
 - Production Engineering Reference
 - System Design Laboratory
+- Debugging Laboratory
+- Failure Engineering Laboratory
 - Portfolio-Grade Open Source Project
 
 The architecture is built around one principle:
 
-> **Every file, directory, lesson, project, and abstraction must have a deliberate engineering purpose.**
+> **Every file, directory, lesson, project, experiment, abstraction, and automation rule must have a deliberate engineering or educational purpose.**
 
 ---
 
-# 1. Architectural Overview
+# 1. Mission
 
-The repository is organized into four primary knowledge domains:
+The repository exists to teach Go as an engineering discipline rather than only as a programming language.
+
+The goal is not simply:
+
+```text
+learn syntax
+```
+
+The goal is:
+
+```text
+Understand
+    ↓
+Practice
+    ↓
+Test
+    ↓
+Debug
+    ↓
+Design
+    ↓
+Build
+    ↓
+Observe
+    ↓
+Optimize
+    ↓
+Operate
+    ↓
+Reason like an engineer
+```
+
+A learner should gradually move from asking:
+
+> How do I write this?
+
+into asking:
+
+> Why should I design it this way?
+
+and eventually:
+
+> What happens when this system is under load, partially failing, changing over time, or operating in production?
+
+---
+
+# 2. Architectural Overview
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐
 │                         GO ENGINEERING                               │
 │                                                                      │
-│  Learn → Practice → Test → Design → Build → Optimize → Operate      │
+│ Learn → Practice → Test → Debug → Design → Build → Observe → Operate│
 └──────────────────────────────────────────────────────────────────────┘
                                   │
-             ┌────────────────────┼────────────────────┐
-             │                    │                    │
-             ▼                    ▼                    ▼
-     CURRICULUM LEVELS       REAL-WORLD PROJECTS    ENGINEERING TOOLS
-       00 → 19                  01 → 10              CI / Scripts / Docs
-             │                    │                    │
-             ▼                    ▼                    ▼
-       Concepts & Skills    Production Systems     Quality & Automation
-             │                    │                    │
-             └────────────────────┼────────────────────┘
+                                  ▼
+        ┌─────────────────────────┼─────────────────────────┐
+        │                         │                         │
+        ▼                         ▼                         ▼
+ CURRICULUM                  REAL-WORLD                ENGINEERING
+ LEVELS                      PROJECTS                  INFRASTRUCTURE
+ 00 → 19                     01 → 10                   CI / Docs / Tools
+        │                         │                         │
+        └─────────────────────────┼─────────────────────────┘
                                   ▼
                          PROFESSIONAL MASTERY
 ```
 
-The repository therefore has three complementary dimensions:
+The repository has three complementary dimensions:
 
 ### Learning
 
-The `level-*` directories provide the structured learning journey.
+The `level-*` directories provide a structured learning journey.
 
 ### Building
 
@@ -57,61 +104,83 @@ The `projects/` directory transforms individual concepts into complete systems.
 
 ### Engineering
 
-The repository infrastructure, testing, CI, tooling, documentation, security policies, and quality rules demonstrate how professional Go projects are maintained.
+The repository infrastructure, testing, CI, tooling, documentation, security policies, metadata, and quality gates demonstrate how professional Go projects are maintained.
 
 ---
 
-# 2. Repository Scale
+# 3. Repository Identity
+
+```text
+Repository:
+    Go Engineering
+
+Module:
+    github.com/md-abu-kayser/go-engineering
+
+Primary Language:
+    Go
+
+Curriculum:
+    Level 00 → Level 19
+
+Primary Learning Model:
+    Learn → Practice → Test → Debug → Apply
+
+Engineering Model:
+    Correctness → Maintainability → Observability → Security → Performance → Operability
+```
+
+The repository must remain useful to two audiences:
+
+1. sequential learners who start from zero;
+2. experienced developers who need targeted reference material.
+
+---
+
+# 4. Repository Scale
 
 The current repository is intentionally large and structured around a measurable curriculum.
 
-| Metric                    |                            Current Target |
-| ------------------------- | ----------------------------------------: |
-| Go source files           |                                 **1,235** |
-| Curriculum levels         |                                    **20** |
-| Lesson directories        |                                 **1,160** |
-| Go test files             |                                    **63** |
-| README files              |                                 **1,191** |
-| Production-style projects |                                    **10** |
-| Curriculum range          |                             **0% → 100%** |
-| Primary language          |                                    **Go** |
-| Module                    | `github.com/md-abu-kayser/go-engineering` |
+| Metric                    | Current Target |
+| ------------------------- | -------------: |
+| Go source files           |      **1,235** |
+| Curriculum levels         |         **20** |
+| Lesson directories        |      **1,160** |
+| Go test files             |         **63** |
+| README files              |      **1,191** |
+| Production-style projects |         **10** |
+| Curriculum range          |  **0% → 100%** |
+| Primary language          |         **Go** |
 
 The file count is not itself considered a measure of quality.
 
-The repository deliberately avoids treating:
+The intended value is:
 
 ```text
-1,235 files
-```
-
-as the primary achievement.
-
-Instead, the intended value is:
-
-```text
-1,235 purposeful implementations
+purposeful implementations
         +
-1,160 structured lessons
+structured lessons
         +
-20 progressive levels
+progressive levels
         +
-10 production-oriented systems
+production-oriented systems
         +
 tests
         +
 documentation
         +
 automation
+        +
+engineering judgment
         =
 a coherent engineering curriculum
 ```
 
-The repository should therefore continue to scale only when additional material provides meaningful educational, engineering, or reference value.
+The repository must grow because knowledge grows, not because statistics need to grow.
 
 ---
 
-# 3. Complete Top-Level Architecture
+# 5. Complete Top-Level Architecture
 
 ```text
 .
@@ -123,7 +192,9 @@ The repository should therefore continue to scale only when additional material 
 │   ├── ARCHITECTURE.md
 │   ├── LESSON_INDEX.json
 │   ├── REPOSITORY_STATS.md
-│   └── ROADMAP.md
+│   ├── ROADMAP.md
+│   └── decisions/
+│       └── ADR-*.md
 │
 ├── level-00-getting-started/
 ├── level-01-fundamentals/
@@ -158,9 +229,17 @@ The repository should therefore continue to scale only when additional material 
 │   ├── project-09-distributed-system/
 │   └── project-10-expert-capstone/
 │
+├── labs/
+│   ├── debugging/
+│   ├── failure-engineering/
+│   ├── performance/
+│   └── security/
+│
 ├── scripts/
 │   ├── count-go.sh
-│   └── verify.sh
+│   ├── verify.sh
+│   ├── generate-lesson-index.sh
+│   └── validate-lessons.sh
 │
 ├── tools/
 │   └── lesson_index.go
@@ -175,61 +254,7 @@ The repository should therefore continue to scale only when additional material 
 
 ---
 
-# 4. Architectural Layers
-
-The repository has six conceptual layers.
-
-```text
-Layer 6 ─ Expert Engineering
-          │
-Layer 5 ─ Production Systems
-          │
-Layer 4 ─ Architecture & Design
-          │
-Layer 3 ─ Advanced Go & Systems
-          │
-Layer 2 ─ Core Language & Standard Library
-          │
-Layer 1 ─ Fundamentals
-          │
-Layer 0 ─ Getting Started
-```
-
-A learner should normally move upward through these layers.
-
-However, the repository deliberately permits non-linear exploration.
-
-For example:
-
-```text
-Beginner
-   │
-   ├── fundamentals
-   ├── exercises
-   └── testing
-         │
-         └── revisit fundamentals
-```
-
-or:
-
-```text
-Experienced Developer
-        │
-        ├── concurrency
-        ├── networking
-        ├── runtime
-        └── performance
-```
-
-The architecture therefore serves both:
-
-1. **sequential learners**, and
-2. **experienced engineers looking for targeted reference material**.
-
----
-
-# 5. Curriculum Architecture
+# 6. Curriculum Architecture
 
 The curriculum consists of exactly twenty levels.
 
@@ -256,53 +281,492 @@ The curriculum consists of exactly twenty levels.
 19  Expert / Professional Go
 ```
 
-The levels are intentionally ordered by dependency.
-
-A simplified dependency progression is:
+The levels are ordered by dependency, but the repository supports non-linear exploration.
 
 ```text
-Level 00
+Beginner
    ↓
-Level 01
+Fundamentals
    ↓
-Level 02
+Core Go
    ↓
-Level 03
+Intermediate Go
    ↓
-Level 04
+Systems / Web / Testing
    ↓
-Level 05
-   ├───────────────┐
-   ↓               ↓
-Level 06        Level 09
-   ↓               ↓
-Level 07        Level 10
-   ↓               ↓
-Level 08        Level 11
-   └───────┬───────┘
-           ↓
-Level 12
+Architecture / Production
    ↓
-Level 13
+Security / Performance / Distributed Systems
    ↓
-Level 14
-   ↓
-Level 15
-   ↓
-Level 16
-   ↓
-Level 17
-   ↓
-Level 18
-   ↓
-Level 19
+Cloud / Runtime / Expert Engineering
 ```
 
-This is a learning dependency map rather than a strict requirement that every learner must complete every level in a single pass.
+A learner may revisit an earlier level whenever later work exposes a knowledge gap.
 
 ---
 
-# 6. Level 00 — Getting Started
+# 7. Learning Architecture
+
+The repository is not merely a directory of examples. It is an engineered learning system.
+
+The standard learning pipeline is:
+
+```text
+CONTEXT
+   ↓
+WHY IT EXISTS
+   ↓
+MENTAL MODEL
+   ↓
+SYNTAX / API
+   ↓
+MINIMAL EXAMPLE
+   ↓
+ANNOTATED EXAMPLE
+   ↓
+OBSERVE BEHAVIOR
+   ↓
+MODIFY
+   ↓
+EDGE CASES
+   ↓
+COMMON MISTAKES
+   ↓
+DEBUG
+   ↓
+TEST
+   ↓
+EXERCISE
+   ↓
+CHALLENGE
+   ↓
+REAL-WORLD APPLICATION
+   ↓
+RECAP
+   ↓
+NEXT CONCEPT
+```
+
+The goal is to prevent passive consumption.
+
+A learner should repeatedly write code, break code, inspect code, test code, and explain code.
+
+---
+
+# 8. Learning Loop
+
+Every substantial lesson follows a variation of:
+
+```text
+Understand
+   ↓
+Observe
+   ↓
+Modify
+   ↓
+Practice
+   ↓
+Break
+   ↓
+Debug
+   ↓
+Test
+   ↓
+Explain
+   ↓
+Apply
+   ↓
+Reflect
+```
+
+The `Break` stage is intentional. Learners should see realistic failures instead of believing that programming is only successful execution.
+
+---
+
+# 9. What Every Lesson Must Teach
+
+A strong lesson should answer:
+
+```text
+1. What is it?
+2. Why does it exist?
+3. What problem does it solve?
+4. How does it work?
+5. When should I use it?
+6. When should I NOT use it?
+7. What mistakes do beginners make?
+8. What does idiomatic Go look like?
+9. What changes in production?
+10. How do I test it?
+11. How do I debug it?
+12. What are the trade-offs?
+13. How does it connect to other concepts?
+```
+
+This is the minimum standard for meaningful engineering education.
+
+---
+
+# 10. Lesson Architecture
+
+Canonical lesson structure:
+
+```text
+<lesson>/
+├── README.md
+├── example_01.go
+├── example_02.go
+├── edge_cases.go
+├── exercise_01.go
+├── exercise_02.go
+├── solution_01.go
+├── solution_02.go
+└── lesson_test.go
+```
+
+Not every lesson needs every file.
+
+Only create a file when it adds meaningful educational or engineering value.
+
+Small lesson:
+
+```text
+lesson/
+├── README.md
+└── hello.go
+```
+
+Deep lesson:
+
+```text
+lesson/
+├── README.md
+├── basic.go
+├── annotated.go
+├── advanced.go
+├── edge_cases.go
+├── broken_example.go
+├── exercise.go
+├── solution.go
+└── lesson_test.go
+```
+
+---
+
+# 11. Universal Lesson README Contract
+
+Every meaningful lesson README should contain:
+
+```text
+1. Title
+2. Difficulty
+3. Estimated Time
+4. Prerequisites
+5. Why This Matters
+6. Real-World Usage
+7. Learning Objectives
+8. Mental Model
+9. Core Concept
+10. Syntax / API
+11. Minimal Example
+12. Annotated Example
+13. Step-by-Step Execution
+14. Important Rules
+15. What Happens Internally
+16. Common Mistakes
+17. Edge Cases
+18. Bad Example
+19. Improved Example
+20. Idiomatic Go Example
+21. Testing
+22. Debugging
+23. Exercises
+24. Challenge
+25. Interview Questions
+26. Production Considerations
+27. Security Considerations
+28. Performance Considerations
+29. Related Lessons
+30. Key Takeaways
+31. Further Reading
+```
+
+A lesson is incomplete when it only teaches syntax but does not explain why the concept matters.
+
+---
+
+# 12. Lesson Metadata
+
+Every lesson should expose machine-readable metadata whenever practical.
+
+Recommended fields:
+
+```json
+{
+  "level": 4,
+  "lesson": 12,
+  "title": "Worker Pools",
+  "category": "concurrency",
+  "difficulty": "intermediate",
+  "estimated_minutes": 45,
+  "status": "verified",
+  "prerequisites": ["goroutines", "channels", "context"],
+  "skills": ["bounded-concurrency", "backpressure", "cancellation"],
+  "production_relevance": "high",
+  "exercise_available": true,
+  "challenge_available": true,
+  "test_available": true,
+  "benchmark_available": false,
+  "project_connections": ["project-04-job-queue"]
+}
+```
+
+Metadata must be deterministic and stable.
+
+---
+
+# 13. Lesson Status Model
+
+Use the following statuses:
+
+```text
+planned
+   ↓
+draft
+   ↓
+in-progress
+   ↓
+review
+   ↓
+complete
+   ↓
+verified
+```
+
+Optional lifecycle states:
+
+```text
+deprecated
+archived
+```
+
+A lesson should not be called `verified` unless its documentation and implementation satisfy the repository quality gates.
+
+---
+
+# 14. Difficulty Model
+
+Difficulty is based on cognitive complexity, not line count.
+
+```text
+Beginner
+   ↓
+Basic
+   ↓
+Intermediate
+   ↓
+Advanced
+   ↓
+Production
+   ↓
+Expert
+```
+
+A 20-line concurrent program may be significantly harder than a 300-line CRUD application.
+
+Difficulty should consider:
+
+```text
+conceptual complexity
+state management
+concurrency
+failure modes
+abstraction depth
+reasoning required
+system boundaries
+operational complexity
+```
+
+---
+
+# 15. Concept → Implementation → Production Model
+
+A concept should evolve through multiple stages:
+
+```text
+Concept
+   ↓
+Tiny Implementation
+   ↓
+Controlled Experiment
+   ↓
+Exercise
+   ↓
+Test
+   ↓
+Edge Cases
+   ↓
+Idiomatic Implementation
+   ↓
+Production Implementation
+   ↓
+System Integration
+```
+
+For example:
+
+```text
+interfaces
+   ↓
+small interface example
+   ↓
+consumer-defined interface
+   ↓
+fake implementation
+   ↓
+testing
+   ↓
+dependency injection
+   ↓
+repository abstraction
+   ↓
+service architecture
+   ↓
+production API
+```
+
+---
+
+# 16. Before / After Engineering Examples
+
+Important lessons may provide:
+
+```text
+❌ Naive Implementation
+⚠️ Problematic Implementation
+✅ Improved Implementation
+⭐ Idiomatic Go
+🏭 Production-Oriented Implementation
+```
+
+The documentation must explain why the implementations differ.
+
+The repository should never imply that the most complex implementation is automatically the best implementation.
+
+---
+
+# 17. Architecture Decision Model
+
+Architecture lessons should follow:
+
+```text
+Problem
+   ↓
+Constraints
+   ↓
+Requirements
+   ↓
+Candidate Designs
+   ↓
+Trade-offs
+   ↓
+Decision
+   ↓
+Implementation
+   ↓
+Validation
+```
+
+Every substantial design lesson should include:
+
+```text
+## Why This Design?
+
+### Problem
+
+### Constraints
+
+### Alternatives
+
+### Decision
+
+### Trade-offs
+
+### When Not To Use This
+
+### Failure Modes
+```
+
+This teaches engineering judgment instead of pattern memorization.
+
+---
+
+# 18. Educational Code vs Production Code
+
+The repository intentionally distinguishes:
+
+```text
+Teaching Code
+```
+
+from:
+
+```text
+Production-Oriented Code
+```
+
+Teaching examples optimize for:
+
+```text
+clarity
+small scope
+low cognitive load
+one concept
+fast feedback
+```
+
+Production examples optimize for:
+
+```text
+maintainability
+observability
+failure handling
+security
+testing
+scalability
+operability
+```
+
+A beginner lesson must not be polluted with abstractions that are irrelevant to the concept being taught.
+
+---
+
+# 19. Engineering Maturity Model
+
+Examples can progressively mature through:
+
+```text
+Level 1  — Syntax
+Level 2  — Correctness
+Level 3  — Clarity
+Level 4  — Testing
+Level 5  — Maintainability
+Level 6  — Observability
+Level 7  — Security
+Level 8  — Performance
+Level 9  — Resilience
+Level 10 — Operability
+Level 11 — Architecture
+Level 12 — Engineering Judgment
+```
+
+Not every lesson needs to reach Level 12.
+
+Production-style projects should demonstrate appropriate maturity across the full lifecycle.
+
+---
+
+# 20. Level 00 — Getting Started
 
 ```text
 level-00-getting-started/
@@ -312,7 +776,7 @@ Purpose:
 
 > Remove environmental friction and establish the first successful Go development experience.
 
-Typical topics include:
+Typical topics:
 
 ```text
 Go installation
@@ -332,27 +796,9 @@ basic tooling
 editor integration
 ```
 
-The first level intentionally has extremely small programs.
+The first level intentionally uses extremely small programs.
 
-Example structure:
-
-```text
-level-00-getting-started/
-├── README.md
-├── main.go
-├── 01_install_and_verify_go.go
-├── 01_install_and_verify_go_test.go
-├── 02_first_program.go
-├── 03_package_main.go
-├── ...
-└── lesson directories...
-```
-
-The objective is not complexity.
-
-The objective is confidence.
-
-A beginner should be able to clone the repository, enter this directory, run:
+A beginner should be able to clone the repository, enter this level, run:
 
 ```bash
 go run .
@@ -362,13 +808,11 @@ and understand exactly what happened.
 
 ---
 
-# 7. Level 01 — Fundamentals
+# 21. Level 01 — Fundamentals
 
 ```text
 level-01-fundamentals/
 ```
-
-This level establishes the language itself.
 
 Primary areas:
 
@@ -394,31 +838,27 @@ imports
 documentation comments
 ```
 
-The architecture moves from:
+Progression:
 
 ```text
 single expression
-        ↓
+      ↓
 small function
-        ↓
+      ↓
 multiple functions
-        ↓
+      ↓
 multiple files
-        ↓
+      ↓
 multiple packages
 ```
 
-This teaches learners to think in Go rather than merely copy syntax.
-
 ---
 
-# 8. Level 02 — Core Go
+# 22. Level 02 — Core Go
 
 ```text
 level-02-core-go/
 ```
-
-This level introduces the data structures and abstractions that define everyday Go programming.
 
 Primary areas:
 
@@ -440,23 +880,19 @@ type switches
 package design
 ```
 
-A central principle at this level is:
+Core principle:
 
 > **Prefer simple composition over unnecessary inheritance-style abstraction.**
 
-Go's philosophy should be visible in the repository structure itself.
-
 ---
 
-# 9. Level 03 — Intermediate Go
+# 23. Level 03 — Intermediate Go
 
 ```text
 level-03-intermediate-go/
 ```
 
-This level introduces features that require stronger mental models.
-
-Topics include:
+Topics:
 
 ```text
 generics
@@ -477,19 +913,17 @@ sentinel errors
 custom error types
 ```
 
-Examples should increasingly resemble code found in real production libraries.
+Examples should increasingly resemble real production libraries.
 
 ---
 
-# 10. Level 04 — Concurrency
+# 24. Level 04 — Concurrency
 
 ```text
 level-04-concurrency/
 ```
 
-Concurrency receives a dedicated level because it is central to professional Go development.
-
-Coverage includes:
+Coverage:
 
 ```text
 goroutines
@@ -519,39 +953,37 @@ concurrent caches
 concurrent data structures
 ```
 
-The progression follows:
+Progression:
 
 ```text
 one goroutine
-      ↓
+   ↓
 goroutine coordination
-      ↓
+   ↓
 channels
-      ↓
+   ↓
 structured concurrency
-      ↓
+   ↓
 shared state
-      ↓
+   ↓
 contention
-      ↓
+   ↓
 cancellation
-      ↓
+   ↓
 production concurrency
 ```
 
-Concurrency lessons should emphasize correctness before optimization.
+Correctness comes before optimization.
 
 ---
 
-# 11. Level 05 — Standard Library Mastery
+# 25. Level 05 — Standard Library Mastery
 
 ```text
 level-05-standard-library/
 ```
 
-This level is a reference-oriented exploration of the Go standard library.
-
-Major packages include:
+Reference-oriented exploration should include, where relevant:
 
 ```text
 fmt
@@ -598,19 +1030,17 @@ debug
 testing
 ```
 
-This level exists to ensure that developers understand what Go already provides before introducing external dependencies.
+The repository should demonstrate the standard library before introducing external dependencies whenever practical.
 
 ---
 
-# 12. Level 06 — CLI & Systems Programming
+# 26. Level 06 — CLI & Systems Programming
 
 ```text
 level-06-cli-and-systems/
 ```
 
-This level transitions from language learning into system interaction.
-
-Areas include:
+Areas:
 
 ```text
 CLI design
@@ -641,15 +1071,13 @@ CLI examples should be realistic enough to evolve into reusable tools.
 
 ---
 
-# 13. Level 07 — Web Development
+# 27. Level 07 — Web Development
 
 ```text
 level-07-web-development/
 ```
 
-This level introduces professional HTTP development.
-
-Architecture topics include:
+Architecture topics:
 
 ```text
 HTTP fundamentals
@@ -682,35 +1110,33 @@ API errors
 API versioning
 ```
 
-The preferred progression is:
+Preferred progression:
 
 ```text
 http.Handler
-    ↓
+   ↓
 handler composition
-    ↓
+   ↓
 router
-    ↓
+   ↓
 middleware
-    ↓
+   ↓
 service layer
-    ↓
+   ↓
 repository layer
-    ↓
+   ↓
 production API
 ```
 
 ---
 
-# 14. Level 08 — Databases & Data Access
+# 28. Level 08 — Databases & Data Access
 
 ```text
 level-08-databases-and-data-access/
 ```
 
-This level bridges application code and persistence systems.
-
-Primary topics:
+Topics:
 
 ```text
 SQL
@@ -735,11 +1161,7 @@ optimistic locking
 database observability
 ```
 
-A key architectural rule is:
-
-> Application business logic must not become tightly coupled to raw database implementation details.
-
-For example:
+Boundary model:
 
 ```text
 HTTP
@@ -751,19 +1173,19 @@ Repository Interface
 PostgreSQL Implementation
 ```
 
-This boundary becomes important in later architecture levels.
+Application business logic should not become tightly coupled to raw persistence details.
 
 ---
 
-# 15. Level 09 — Testing & Quality
+# 29. Level 09 — Testing & Quality
 
 ```text
 level-09-testing-and-quality/
 ```
 
-Testing is treated as an engineering discipline, not an afterthought.
+Testing is an engineering discipline, not an afterthought.
 
-Coverage includes:
+Coverage:
 
 ```text
 testing.T
@@ -788,35 +1210,31 @@ test architecture
 property-oriented testing
 ```
 
-Preferred testing hierarchy:
+Testing hierarchy:
 
 ```text
 small unit tests
-      ↓
+   ↓
 package tests
-      ↓
+   ↓
 integration tests
-      ↓
+   ↓
 system tests
-      ↓
+   ↓
 performance tests
-      ↓
+   ↓
 production verification
 ```
 
-Tests should demonstrate why the design is testable.
-
 ---
 
-# 16. Level 10 — Go Architecture
+# 30. Level 10 — Go Architecture
 
 ```text
 level-10-go-architecture/
 ```
 
-This level teaches how larger Go systems are structured.
-
-Topics include:
+Topics:
 
 ```text
 layered architecture
@@ -839,33 +1257,21 @@ modular monoliths
 architecture tests
 ```
 
-The repository intentionally avoids declaring one architecture universally superior.
+The repository does not claim one architecture is universally superior.
 
-Instead, each example should explain:
-
-```text
-problem
-    ↓
-constraints
-    ↓
-candidate architecture
-    ↓
-trade-offs
-    ↓
-implementation
-```
+Architecture follows requirements, constraints, and trade-offs.
 
 ---
 
-# 17. Level 11 — Design Patterns
+# 31. Level 11 — Design Patterns
 
 ```text
 level-11-design-patterns/
 ```
 
-Patterns are taught as solutions to recurring problems rather than as memorization exercises.
+Patterns are taught as recurring problem-solving techniques rather than memorization exercises.
 
-Examples include:
+Examples:
 
 ```text
 Factory
@@ -892,21 +1298,17 @@ Circuit Breaker
 Bulkhead
 ```
 
-Go-specific implementations should emphasize idiomatic simplicity.
-
-A pattern should never be introduced merely because it exists in a pattern catalog.
+Go-specific implementations must emphasize idiomatic simplicity.
 
 ---
 
-# 18. Level 12 — Production Engineering
+# 32. Level 12 — Production Engineering
 
 ```text
 level-12-production-engineering/
 ```
 
-This is where examples begin looking like real operating services.
-
-Coverage includes:
+Coverage:
 
 ```text
 configuration
@@ -946,15 +1348,13 @@ How do we limit its damage?
 
 ---
 
-# 19. Level 13 — Security
+# 33. Level 13 — Security
 
 ```text
 level-13-security/
 ```
 
-Security examples must prioritize defensive engineering.
-
-Coverage includes:
+Security topics:
 
 ```text
 authentication
@@ -984,17 +1384,15 @@ security testing
 dependency security
 ```
 
-Security examples should explicitly document unsafe patterns when demonstrating vulnerabilities.
+Security examples should explicitly distinguish safe and intentionally vulnerable demonstrations.
 
 ---
 
-# 20. Level 14 — Performance & Optimization
+# 34. Level 14 — Performance & Optimization
 
 ```text
 level-14-performance-and-optimization/
 ```
-
-Optimization must be evidence-driven.
 
 Topics:
 
@@ -1020,7 +1418,7 @@ database performance
 profiling-driven optimization
 ```
 
-The preferred workflow is:
+Workflow:
 
 ```text
 measure
@@ -1038,17 +1436,13 @@ compare
 document trade-off
 ```
 
-Premature optimization is explicitly discouraged.
-
 ---
 
-# 21. Level 15 — Networking & Distributed Systems
+# 35. Level 15 — Networking & Distributed Systems
 
 ```text
 level-15-networking-and-distributed-systems/
 ```
-
-This level expands from local processes to communicating systems.
 
 Coverage:
 
@@ -1080,19 +1474,17 @@ eventual consistency
 distributed tracing
 ```
 
-The central idea is:
+Central principle:
 
-> Distributed systems are primarily failure-management systems.
+> **Distributed systems are primarily failure-management systems.**
 
 ---
 
-# 22. Level 16 — Microservices & Cloud Native
+# 36. Level 16 — Microservices & Cloud Native
 
 ```text
 level-16-microservices-and-cloud-native/
 ```
-
-This level introduces service-oriented deployment.
 
 Coverage:
 
@@ -1119,19 +1511,17 @@ autoscaling concepts
 cloud-native observability
 ```
 
-The repository should also teach when **not** to use microservices.
+The curriculum must also teach when **not** to use microservices.
 
 ---
 
-# 23. Level 17 — Advanced Go Engineering
+# 37. Level 17 — Advanced Go Engineering
 
 ```text
 level-17-advanced-go-engineering/
 ```
 
-This level explores the language and runtime at a deeper engineering level.
-
-Topics include:
+Topics:
 
 ```text
 Go memory model
@@ -1155,19 +1545,19 @@ assembly awareness
 performance engineering
 ```
 
-These lessons should increasingly resemble research notes and engineering experiments rather than introductory tutorials.
+These lessons should increasingly resemble engineering experiments and research notes.
 
 ---
 
-# 24. Level 18 — Real-World Projects
+# 38. Level 18 — Real-World Projects
 
 ```text
 level-18-real-world-projects/
 ```
 
-This level acts as the bridge between isolated lessons and complete systems.
+Purpose:
 
-Projects combine multiple earlier concepts.
+> Bridge isolated lessons and complete systems.
 
 Examples:
 
@@ -1184,7 +1574,7 @@ distributed system
 production capstone
 ```
 
-The project-level curriculum should answer:
+Every project should answer:
 
 ```text
 What problem are we solving?
@@ -1198,19 +1588,20 @@ How is security implemented?
 How is it tested?
 How is it observed?
 How is it deployed?
+How is it operated?
 ```
 
 ---
 
-# 25. Level 19 — Expert / Professional Go
+# 39. Level 19 — Expert / Professional Go
 
 ```text
 level-19-expert-professional-go/
 ```
 
-The final level is about engineering judgment.
+This level focuses on engineering judgment.
 
-Topics include:
+Topics:
 
 ```text
 large-scale architecture
@@ -1230,7 +1621,6 @@ backward compatibility
 dependency strategy
 technical debt
 maintainability
-engineering trade-offs
 code ownership
 architecture governance
 production debugging
@@ -1238,9 +1628,7 @@ failure analysis
 long-term system evolution
 ```
 
-At this level there may no longer be a single “correct” answer.
-
-The learner should be able to explain:
+The learner should increasingly explain:
 
 ```text
 why
@@ -1254,1270 +1642,130 @@ how
 
 ---
 
-# 26. Lesson Directory Architecture
+# 40. Skill Matrix
 
-Each lesson directory follows a predictable structure.
+The repository should maintain a skill-oriented view in addition to a level-oriented view.
 
-Canonical form:
-
-```text
-<lesson>/
-├── README.md
-├── example_01.go
-├── example_02.go
-├── example_03.go
-├── exercise_01.go
-├── exercise_02.go
-├── solution_01.go
-├── solution_02.go
-└── example_test.go
-```
-
-Not every lesson requires every file.
-
-The rule is:
-
-> Only create a file when it adds meaningful educational or engineering value.
-
-For a very small concept:
+Example:
 
 ```text
-lesson/
-├── README.md
-└── hello.go
+Skill                 Introduced   Practiced   Tested   Production
+-------------------------------------------------------------------
+goroutines             L04          L04         L09      L12/L18
+channels               L04          L04         L09      L12/L18
+HTTP                   L07          L07         L09      L12/L18
+PostgreSQL             L08          L08         L09      L18
+observability          L12          L12         L18      L18/L19
+security               L07          L13         L13      L18/L19
+profiling              L14          L14         L17      L18/L19
 ```
 
-For a deeper topic:
+The matrix should answer:
 
-```text
-lesson/
-├── README.md
-├── basic.go
-├── advanced.go
-├── edge_cases.go
-├── exercise.go
-├── solution.go
-└── lesson_test.go
-```
+> Where did I learn this skill?
+
+> Where did I practice it?
+
+> Where was it tested?
+
+> Where did I use it in a system?
 
 ---
 
-# 27. Lesson README Contract
+# 41. Knowledge Dependency Model
 
-Every meaningful lesson should explain:
+Every substantial lesson should expose relationships to other lessons.
 
 ```text
-Title
-Purpose
-Learning objectives
 Prerequisites
-Concept explanation
-Examples
-Important rules
-Common mistakes
-Exercises
-Expected outcome
-Further reading
-```
-
-A strong lesson README should allow a developer to understand:
-
-> **Why does this concept matter?**
-
-not merely:
-
-> **What syntax does it use?**
-
----
-
-# 28. Naming Convention
-
-The repository uses predictable naming.
-
-Directories:
-
-```text
-kebab-case
-```
-
-Examples:
-
-```text
-level-04-concurrency
-level-08-databases-and-data-access
-project-07-realtime-service
-```
-
-Go source files:
-
-```text
-snake_case.go
-```
-
-Examples:
-
-```text
-worker_pool.go
-context_timeout.go
-http_server.go
-transaction_retry.go
-```
-
-Go identifiers follow standard Go conventions:
-
-```text
-PascalCase for exported identifiers
-camelCase for unexported identifiers
-```
-
-The repository avoids filenames such as:
-
-```text
-test1.go
-example.go
-foo.go
-temp.go
-misc.go
-final.go
-new.go
-new2.go
-```
-
-unless the file's educational purpose explicitly warrants such naming.
-
----
-
-# 29. Package Architecture
-
-Each lesson should normally use an isolated package.
-
-Examples:
-
-```text
-package variables
-```
-
-or:
-
-```text
-package concurrency
-```
-
-The purpose is to keep lessons independent and prevent accidental dependency chains across thousands of examples.
-
-This means:
-
-```text
-lesson A
-   │
-   └── independent
-
-lesson B
-   │
-   └── independent
-
-lesson C
-   │
-   └── independent
-```
-
-rather than:
-
-```text
-lesson A
-   ↓
-lesson B
-   ↓
-lesson C
-   ↓
-lesson D
-   ↓
-entire repository breaks
-```
-
-This isolation is one of the most important scalability decisions in the repository.
-
----
-
-# 30. Dependency Boundary
-
-The repository follows this general dependency rule:
-
-```text
-Foundational lessons
-        ↓
-Standard library
-        ↓
-External libraries only when justified
-        ↓
-Production projects
-```
-
-A beginner lesson should not unexpectedly depend on a large third-party framework.
-
-For example:
-
-```text
-strings lesson
-```
-
-should use:
-
-```go
-import "strings"
-```
-
-rather than introducing an external string manipulation library.
-
-The repository should demonstrate the standard library first.
-
----
-
-# 31. Internal vs External Dependencies
-
-Production projects may use external dependencies when they provide substantial value.
-
-External dependencies should be:
-
-```text
-actively maintained
-well understood
-appropriately licensed
-security-conscious
-justified by the project
-```
-
-Dependencies should never be introduced purely to demonstrate that a library exists.
-
-Each significant dependency should answer:
-
-```text
-Why this dependency?
-What problem does it solve?
-What is the standard-library alternative?
-What are the trade-offs?
-```
-
----
-
-# 32. Real-World Project Architecture
-
-All ten production-style projects live under:
-
-```text
-projects/
-```
-
-The project hierarchy is intentionally separate from the educational curriculum.
-
-```text
-projects/
-├── project-01-production-api/
-├── project-02-auth-service/
-├── project-03-url-shortener/
-├── project-04-job-queue/
-├── project-05-notification-service/
-├── project-06-file-processing-system/
-├── project-07-realtime-service/
-├── project-08-microservices-platform/
-├── project-09-distributed-system/
-└── project-10-expert-capstone/
-```
-
-A project may internally contain:
-
-```text
-project/
-├── README.md
-├── cmd/
-├── internal/
-├── api/
-├── config/
-├── domain/
-├── application/
-├── infrastructure/
-├── migrations/
-├── tests/
-├── docs/
-└── deployments/
-```
-
-However, project architecture should always be proportional to project complexity.
-
-The repository must avoid turning every tiny example into a fake enterprise application.
-
----
-
-# 33. `cmd/` Convention
-
-Production command entry points belong under:
-
-```text
-cmd/
+      ↓
+Current Concept
+      ↓
+Related Concepts
+      ↓
+Advanced Concepts
+      ↓
+Projects
 ```
 
 Example:
 
 ```text
-cmd/
-├── api/
-│   └── main.go
-├── worker/
-│   └── main.go
-└── migrate/
-    └── main.go
+context
+├── prerequisites
+│   ├── functions
+│   └── interfaces
+│
+├── related
+│   ├── goroutines
+│   ├── HTTP
+│   └── cancellation
+│
+├── used-by
+│   ├── worker pool
+│   ├── HTTP server
+│   └── database calls
+│
+└── advanced
+    ├── structured concurrency
+    └── distributed cancellation
 ```
-
-Each command should have one clear responsibility.
 
 ---
 
-# 34. `internal/` Convention
+# 42. Cross-Level References
 
-Application implementation that should not be imported externally belongs under:
-
-```text
-internal/
-```
+Lessons should link forward and backward where useful.
 
 Example:
 
 ```text
-internal/
-├── domain/
-├── application/
-├── infrastructure/
-├── transport/
-├── repository/
-└── config/
+Level 04 — Worker Pools
+        ↓
+Level 09 — Testing Concurrent Code
+        ↓
+Level 12 — Production Worker Lifecycle
+        ↓
+Level 14 — Worker Pool Performance
+        ↓
+Level 15 — Distributed Job Processing
+        ↓
+Level 18 — Job Queue Project
 ```
 
-This reinforces Go's package visibility model and demonstrates practical package boundaries.
+This creates a learning graph instead of a disconnected list of chapters.
 
 ---
 
-# 35. `api/` Convention
+# 43. Real-World Project Architecture
 
-API contracts and transport-level definitions may live under:
-
-```text
-api/
-```
-
-depending on project needs.
-
-Possible contents:
+All major projects live under:
 
 ```text
-api/
-├── openapi/
-├── proto/
-└── schemas/
+projects/
 ```
 
-The repository does not mandate this for every project.
+Projects are separate from the curriculum for an important reason:
 
-Architecture follows requirements, not fashion.
+```text
+level-*/
+    teaches capabilities
+
+projects/
+    integrates capabilities
+```
+
+The levels answer:
+
+> Can you understand and implement the concept?
+
+The projects answer:
+
+> Can you combine concepts into a maintainable system?
 
 ---
 
-# 36. Educational Code vs Production Code
-
-The repository intentionally maintains a distinction between:
-
-```text
-Teaching Code
-```
-
-and:
-
-```text
-Production-Oriented Code
-```
-
-Teaching examples optimize for:
-
-```text
-clarity
-small scope
-low cognitive load
-one concept
-```
-
-Production examples optimize for:
-
-```text
-maintainability
-observability
-failure handling
-security
-testing
-scalability
-operability
-```
-
-A beginner lesson therefore should not necessarily contain:
-
-```text
-dependency injection
-repository interfaces
-tracing
-metrics
-middleware
-configuration frameworks
-```
-
-unless the concept being taught requires them.
-
----
-
-# 37. Testing Architecture
-
-Tests exist at multiple levels.
-
-```text
-Lesson Tests
-     ↓
-Package Tests
-     ↓
-Integration Tests
-     ↓
-Project Tests
-     ↓
-System / Performance Tests
-```
-
-Current repository target:
-
-```text
-63 Go test files
-```
-
-Tests should be focused and deterministic.
-
-Avoid:
-
-```text
-sleep-based tests
-global mutable state
-order-dependent tests
-network calls without isolation
-environment-dependent assumptions
-```
-
-when those behaviors are not central to the concept.
-
----
-
-# 38. Test Naming
-
-Recommended names:
-
-```text
-TestAdd
-TestParseConfig
-TestWorkerPool
-TestHTTPHandler
-TestRepository_Create
-TestRepository_FindByID
-```
-
-Table-driven tests should use descriptive cases:
-
-```go
-tests := []struct {
-    name string
-    ...
-}{
-    {
-        name: "returns error for empty input",
-    },
-    {
-        name: "accepts valid input",
-    },
-}
-```
-
-Tests should read like documentation.
-
----
-
-# 39. Benchmark Architecture
-
-Performance-sensitive lessons may contain:
-
-```text
-BenchmarkX
-```
-
-Benchmarks should explain:
-
-```text
-what is measured
-why it matters
-what changed
-what the benchmark demonstrates
-```
-
-A benchmark without interpretation is incomplete educational material.
-
----
-
-# 40. Fuzz Testing Architecture
-
-Fuzz tests are used where input-space exploration is valuable.
-
-Examples include:
-
-```text
-parsers
-encoders
-decoders
-protocol handling
-string transformations
-validation
-URL processing
-serialization
-```
-
-Fuzzing should be introduced after the underlying testing concepts are understood.
-
----
-
-# 41. Error Handling Architecture
-
-Go's explicit error model is a core repository design principle.
-
-Preferred progression:
-
-```text
-if err != nil
-       ↓
-wrapped errors
-       ↓
-errors.Is
-       ↓
-errors.As
-       ↓
-domain-specific errors
-       ↓
-error contracts
-```
-
-Avoid examples that ignore errors purely for convenience unless the lesson explicitly discusses why that is acceptable.
-
-This repository intentionally treats errors as part of API design.
-
----
-
-# 42. Context Architecture
-
-Context is considered an application-boundary concern.
-
-Appropriate examples include:
-
-```go
-func Fetch(ctx context.Context, id string) error
-```
-
-Rather than creating arbitrary contexts deep inside business logic.
-
-The repository emphasizes:
-
-```text
-request lifecycle
-cancellation
-timeouts
-deadlines
-propagation
-```
-
-while discouraging inappropriate context usage for ordinary data passing.
-
----
-
-# 43. Concurrency Safety
-
-Concurrency examples must explicitly address:
-
-```text
-ownership
-synchronization
-cancellation
-lifecycle
-shutdown
-data races
-deadlocks
-leaks
-backpressure
-bounded concurrency
-```
-
-A concurrent example is not considered complete merely because it uses a goroutine.
-
-The repository distinguishes:
-
-```text
-concurrent
-```
-
-from:
-
-```text
-correctly concurrent
-```
-
----
-
-# 44. Performance Philosophy
-
-Performance examples must remain evidence-driven.
-
-Preferred sequence:
-
-```text
-Correctness
-   ↓
-Measurement
-   ↓
-Profiling
-   ↓
-Optimization
-   ↓
-Benchmark
-   ↓
-Regression protection
-```
-
-The repository avoids teaching optimizations without context.
-
-A slower implementation may be preferable when it is:
-
-```text
-simpler
-clearer
-safer
-more maintainable
-```
-
-and sufficiently fast.
-
----
-
-# 45. Security Philosophy
-
-Security is a cross-cutting concern.
-
-The repository therefore uses security principles throughout the curriculum rather than limiting security education to Level 13.
-
-For example:
-
-```text
-Level 07
-    secure HTTP handling
-
-Level 08
-    safe SQL queries
-
-Level 09
-    security-focused tests
-
-Level 12
-    secure configuration
-
-Level 13
-    dedicated security curriculum
-
-Level 15
-    secure network communication
-
-Level 16
-    cloud security concepts
-
-Level 19
-    security architecture
-```
-
----
-
-# 46. Observability Architecture
-
-Production projects should progressively introduce:
-
-```text
-logs
-metrics
-traces
-health checks
-profiles
-diagnostics
-```
-
-The preferred mental model is:
-
-```text
-Logs
-  │
-  ├── what happened?
-  │
-Metrics
-  │
-  ├── how often?
-  │
-Traces
-  │
-  ├── where did it happen?
-  │
-Profiles
-  │
-  └── why is it expensive?
-```
-
-Observability examples should include operational context rather than simply invoking an API.
-
----
-
-# 47. Documentation Architecture
-
-Documentation is distributed according to scope.
-
-```text
-README.md
-    │
-    ├── project overview
-    │
-docs/
-    ├── architecture
-    ├── roadmap
-    ├── statistics
-    └── generated lesson index
-    │
-level README
-    │
-    └── level-specific concepts
-    │
-lesson README
-    │
-    └── exact lesson guidance
-    │
-project README
-    │
-    └── system-specific documentation
-```
-
-This prevents the root README from becoming a giant unmaintainable document.
-
----
-
-# 48. Root README Responsibility
-
-The root README should answer:
-
-```text
-What is this repository?
-Why does it exist?
-Who is it for?
-How large is it?
-How is it organized?
-Where should I start?
-What technologies are covered?
-What projects exist?
-How do I contribute?
-```
-
-It should provide enough context to impress a first-time visitor without requiring them to read every lesson.
-
----
-
-# 49. `docs/LESSON_INDEX.json`
-
-The lesson index acts as machine-readable repository metadata.
-
-Its purpose is to make the curriculum discoverable by:
-
-```text
-scripts
-automation
-future web interfaces
-search tools
-analytics
-curriculum dashboards
-AI-assisted navigation
-```
-
-The index should contain stable metadata such as:
-
-```text
-level
-level number
-lesson number
-title
-path
-category
-difficulty
-status
-```
-
-The index must be deterministic.
-
-Running the indexing tool twice against the same repository should produce equivalent output.
-
----
-
-# 50. Repository Verification
-
-The repository includes:
-
-```text
-scripts/count-go.sh
-scripts/verify.sh
-```
-
-Their role is to enforce architectural invariants.
-
-Typical checks include:
-
-```text
-Go file count
-required directories
-required files
-README presence
-formatting
-module validity
-lesson index generation
-test execution
-documentation structure
-```
-
-The repository should fail loudly when its structural assumptions are violated.
-
----
-
-# 51. CI Architecture
-
-Continuous integration lives under:
-
-```text
-.github/workflows/ci.yml
-```
-
-CI exists to verify that contributions preserve repository quality.
-
-Conceptually:
-
-```text
-Pull Request / Push
-        │
-        ▼
-Repository Integrity
-        │
-        ▼
-Formatting
-        │
-        ▼
-Module Validation
-        │
-        ▼
-Static Analysis
-        │
-        ▼
-Unit Tests
-        │
-        ▼
-Race Detection
-        │
-        ▼
-Linting
-        │
-        ▼
-PASS
-```
-
-The pipeline must not become so fragile that educational contributions are unnecessarily blocked.
-
----
-
-# 52. Linting Architecture
-
-The repository uses:
-
-```text
-.golangci.yml
-```
-
-as the central static-analysis configuration.
-
-Lint rules should emphasize:
-
-```text
-correctness
-clarity
-dead code
-error handling
-style consistency
-common Go mistakes
-```
-
-Linting should complement the repository rather than turn into an arbitrary style contest.
-
----
-
-# 53. GitHub Workflow
-
-The intended contributor workflow is:
-
-```text
-Fork
-  ↓
-Create branch
-  ↓
-Create/update lesson
-  ↓
-Write documentation
-  ↓
-Write tests when appropriate
-  ↓
-Run verification
-  ↓
-Commit
-  ↓
-Push
-  ↓
-Open Pull Request
-  ↓
-CI
-  ↓
-Review
-  ↓
-Merge
-```
-
-The project is intended to support both personal learning and external open-source contribution.
-
----
-
-# 54. Commit Architecture
-
-Commit messages should be clear and conventional.
-
-Recommended style:
-
-```text
-feat: add context cancellation lessons
-fix: correct worker pool shutdown behavior
-docs: expand concurrency architecture guide
-test: add table-driven HTTP handler tests
-refactor: simplify repository dependency wiring
-perf: reduce allocations in parser benchmark
-chore: update CI toolchain
-```
-
-The repository should avoid low-information commits such as:
-
-```text
-update
-changes
-stuff
-fix
-new
-final
-done
-```
-
----
-
-# 55. Branching Strategy
-
-For a personal project:
-
-```text
-main
-```
-
-is the stable branch.
-
-Feature work may use:
-
-```text
-feat/*
-fix/*
-docs/*
-refactor/*
-perf/*
-```
-
-Examples:
-
-```text
-feat/worker-pool-lessons
-docs/improve-architecture-guide
-fix/http-timeout-example
-perf/json-parser-benchmark
-```
-
----
-
-# 56. Scalability Rules
-
-The repository must be able to grow beyond 1,235 Go files.
-
-The architecture therefore prohibits:
-
-```text
-giant packages
-giant lesson files
-monolithic examples
-global shared state
-cross-level coupling
-hidden dependencies
-```
-
-The preferred growth pattern is:
-
-```text
-more focused lessons
-more focused packages
-more focused tests
-more focused projects
-```
-
-rather than:
-
-```text
-one increasingly massive example
-```
-
----
-
-# 57. File Count Governance
-
-The repository has a target of:
-
-```text
-1,235 .go files
-```
-
-but does not treat this as a hard upper boundary.
-
-Future additions are acceptable when they provide:
-
-```text
-new concept
-new implementation technique
-new edge case
-new engineering pattern
-new test strategy
-new production scenario
-new performance investigation
-new security scenario
-```
-
-Files should not be added solely to increase statistics.
-
-The guiding question is:
-
-> **Would an experienced developer defend the existence of this file?**
-
-If the answer is no, the file probably should not exist.
-
----
-
-# 58. Avoiding Duplication
-
-Two files may implement similar concepts if their educational purpose differs.
-
-For example:
-
-```text
-01-basic-worker-pool.go
-```
-
-and:
-
-```text
-07-production-worker-pool-with-cancellation.go
-```
-
-may both use worker pools, but they teach different engineering concepts.
-
-This is acceptable.
-
-What is discouraged is:
-
-```text
-worker_pool_01.go
-worker_pool_02.go
-worker_pool_03.go
-```
-
-where the only difference is superficial naming.
-
----
-
-# 59. Difficulty Progression
-
-Lessons should generally progress:
-
-```text
-Beginner
-    ↓
-Basic
-    ↓
-Intermediate
-    ↓
-Advanced
-    ↓
-Production
-    ↓
-Expert
-```
-
-Difficulty should be determined by cognitive complexity rather than simply code length.
-
-A 20-line concurrent program can be harder than a 300-line CRUD application.
-
----
-
-# 60. Learning Loop
-
-Every substantial lesson should follow a variation of:
-
-```text
-Understand
-   ↓
-Observe
-   ↓
-Modify
-   ↓
-Practice
-   ↓
-Break
-   ↓
-Debug
-   ↓
-Test
-   ↓
-Apply
-```
-
-This repository is intentionally designed to encourage active learning.
-
----
-
-# 61. Example Educational Progression
-
-A learner might encounter concurrency like this:
-
-```text
-Lesson 1
-What is a goroutine?
-
-       ↓
-
-Lesson 2
-Starting multiple goroutines
-
-       ↓
-
-Lesson 3
-Waiting with sync.WaitGroup
-
-       ↓
-
-Lesson 4
-Communicating with channels
-
-       ↓
-
-Lesson 5
-select
-
-       ↓
-
-Lesson 6
-Cancellation with context
-
-       ↓
-
-Lesson 7
-Worker pool
-
-       ↓
-
-Lesson 8
-Backpressure
-
-       ↓
-
-Lesson 9
-Graceful shutdown
-
-       ↓
-
-Project
-Production job processing service
-```
-
-This is the difference between:
-
-```text
-a collection of examples
-```
-
-and:
-
-```text
-an engineered curriculum
-```
-
----
-
-# 62. Project Architecture Philosophy
-
-Production projects should integrate multiple levels.
-
-For example:
-
-```text
-Project 01 — Production API
-```
-
-may combine:
-
-```text
-Level 02 → structs/interfaces
-Level 04 → concurrency
-Level 05 → net/http
-Level 08 → PostgreSQL
-Level 09 → testing
-Level 10 → architecture
-Level 12 → observability
-Level 13 → security
-Level 14 → performance
-Level 18 → system integration
-```
-
-This creates a feedback loop:
-
-```text
-learn concept
-   ↓
-practice concept
-   ↓
-combine concepts
-   ↓
-build system
-   ↓
-discover missing knowledge
-   ↓
-return to curriculum
-```
-
----
-
-# 63. Ten Production-Style Projects
-
-The project suite follows increasing system complexity.
+# 44. Ten Production-Style Projects
 
 ```text
 01  Production API
@@ -2532,7 +1780,7 @@ The project suite follows increasing system complexity.
 10  Expert Capstone
 ```
 
-A simplified progression is:
+Progression:
 
 ```text
 CRUD
@@ -2558,9 +1806,9 @@ large-scale architecture
 
 ---
 
-# 64. Production Project Boundaries
+# 45. Production Project Boundaries
 
-Each project should remain independently understandable.
+Each project must remain independently understandable.
 
 Projects should avoid hidden dependencies on:
 
@@ -2573,82 +1821,683 @@ local-only services
 untracked generated files
 ```
 
-A project should document its external requirements explicitly.
+A project must document its requirements explicitly.
 
 ---
 
-# 65. Configuration Architecture
+# 46. Project Internal Architecture
 
-Configuration should follow a predictable hierarchy.
-
-Conceptually:
+A production project may contain:
 
 ```text
-defaults
-   ↓
-configuration file
-   ↓
-environment variables
-   ↓
-runtime flags
+project/
+├── README.md
+├── cmd/
+├── internal/
+├── api/
+├── config/
+├── domain/
+├── application/
+├── infrastructure/
+├── migrations/
+├── tests/
+├── docs/
+└── deployments/
 ```
 
-Secrets must never be committed to the repository.
+Architecture must remain proportional to complexity.
+
+A tiny program must not be turned into a fake enterprise application merely to demonstrate folders.
+
+---
+
+# 47. `cmd/` Convention
+
+Production command entry points belong under:
+
+```text
+cmd/
+```
+
+Example:
+
+```text
+cmd/
+├── api/
+│   └── main.go
+├── worker/
+│   └── main.go
+└── migrate/
+    └── main.go
+```
+
+Each command should have one clear responsibility.
+
+---
+
+# 48. `internal/` Convention
+
+Implementation that should not be imported externally belongs under:
+
+```text
+internal/
+```
+
+Example:
+
+```text
+internal/
+├── domain/
+├── application/
+├── infrastructure/
+├── transport/
+├── repository/
+└── config/
+```
+
+---
+
+# 49. `api/` Convention
+
+API contracts may live under:
+
+```text
+api/
+├── openapi/
+├── proto/
+└── schemas/
+```
+
+This is optional and requirements-driven.
+
+Architecture follows requirements, not fashion.
+
+---
+
+# 50. Dependency Architecture
+
+General dependency rule:
+
+```text
+Foundational Lessons
+        ↓
+Standard Library
+        ↓
+External Libraries When Justified
+        ↓
+Production Projects
+```
+
+Beginner lessons should not unexpectedly depend on large frameworks.
+
+A significant dependency should answer:
+
+```text
+Why this dependency?
+What problem does it solve?
+What is the standard-library alternative?
+What are the trade-offs?
+What is its maintenance and security posture?
+```
+
+---
+
+# 51. Package Architecture
+
+Each lesson should normally use an isolated package when isolation provides educational value.
+
+Example:
+
+```go
+package variables
+```
+
+or:
+
+```go
+package concurrency
+```
+
+Avoid repository-wide accidental dependency chains.
+
+Preferred:
+
+```text
+lesson A ── independent
+lesson B ── independent
+lesson C ── independent
+```
+
+Not:
+
+```text
+lesson A
+   ↓
+lesson B
+   ↓
+lesson C
+   ↓
+entire repository breaks
+```
+
+---
+
+# 52. Naming Convention
+
+Directories:
+
+```text
+kebab-case
+```
 
 Examples:
 
 ```text
-DATABASE_URL
-REDIS_URL
-JWT_SECRET
-API_KEY
+level-04-concurrency
+level-08-databases-and-data-access
+project-07-realtime-service
 ```
 
-may appear in:
+Go files:
 
 ```text
-.env.example
+snake_case.go
 ```
 
-but real credentials must remain external.
+Examples:
+
+```text
+worker_pool.go
+context_timeout.go
+http_server.go
+transaction_retry.go
+```
+
+Go identifiers:
+
+```text
+PascalCase — exported
+camelCase  — unexported
+```
+
+Avoid meaningless filenames:
+
+```text
+test1.go
+foo.go
+temp.go
+misc.go
+final.go
+new.go
+new2.go
+```
 
 ---
 
-# 66. Database Architecture
+# 53. Interfaces
 
-Database-backed examples should prefer clear separation:
+Interfaces should usually be defined near the consumer that needs them.
 
-```text
-Transport
-   ↓
-Application
-   ↓
-Domain
-   ↓
-Repository
-   ↓
-Database
+Avoid speculative interfaces such as:
+
+```go
+type Everything interface {
+    Create()
+    Read()
+    Update()
+    Delete()
+    Notify()
+    Export()
+}
 ```
 
-The repository should demonstrate both:
+Prefer small interfaces with a clear purpose.
 
-```text
-simple database/sql usage
-```
+The repository should teach:
 
-and:
-
-```text
-larger repository-driven systems
-```
-
-so learners understand why abstractions appear when complexity demands them.
+> **An interface is a boundary for behavior, not a requirement to abstract everything.**
 
 ---
 
-# 67. HTTP Architecture
+# 54. Dependency Injection
 
-For production-oriented APIs, a representative design is:
+Dependency injection should normally be demonstrated with ordinary Go techniques:
+
+```text
+interfaces
+constructors
+function parameters
+struct dependencies
+```
+
+Example:
+
+```go
+type Service struct {
+    repo Repository
+}
+```
+
+Avoid introducing a framework when simple Go is sufficient.
+
+---
+
+# 55. Package Visibility
+
+Preferred:
+
+```text
+small public surface
+large private implementation
+```
+
+Avoid exporting everything.
+
+The repository should show how unexported identifiers preserve invariants and reduce API complexity.
+
+---
+
+# 56. Error Handling Architecture
+
+Preferred progression:
+
+```text
+if err != nil
+   ↓
+wrapped errors
+   ↓
+errors.Is
+   ↓
+errors.As
+   ↓
+domain-specific errors
+   ↓
+error contracts
+```
+
+Errors are part of API design.
+
+Examples should not silently ignore errors unless ignoring them is itself the subject of the lesson.
+
+---
+
+# 57. Context Architecture
+
+Context is primarily an application-boundary concern.
+
+Appropriate:
+
+```go
+func Fetch(ctx context.Context, id string) error
+```
+
+Emphasize:
+
+```text
+request lifecycle
+cancellation
+timeouts
+deadlines
+propagation
+```
+
+Discourage using context as a generic data bag.
+
+---
+
+# 58. Concurrency Safety Architecture
+
+Concurrency examples must explicitly address where relevant:
+
+```text
+ownership
+synchronization
+cancellation
+lifecycle
+shutdown
+data races
+deadlocks
+leaks
+backpressure
+bounded concurrency
+```
+
+The repository distinguishes:
+
+```text
+concurrent
+```
+
+from:
+
+```text
+correctly concurrent
+```
+
+---
+
+# 59. Testing Architecture
+
+Tests exist at multiple levels:
+
+```text
+Lesson Tests
+     ↓
+Package Tests
+     ↓
+Integration Tests
+     ↓
+Project Tests
+     ↓
+System / Performance Tests
+```
+
+Tests should be focused and deterministic.
+
+Avoid unnecessary:
+
+```text
+sleep-based tests
+global mutable state
+order-dependent tests
+unisolated network calls
+environment-dependent assumptions
+```
+
+---
+
+# 60. Test Naming
+
+Recommended names:
+
+```text
+TestAdd
+TestParseConfig
+TestWorkerPool
+TestHTTPHandler
+TestRepository_Create
+TestRepository_FindByID
+```
+
+Table-driven cases should be descriptive:
+
+```go
+tests := []struct {
+    name string
+    // ...
+}{
+    {
+        name: "returns error for empty input",
+    },
+    {
+        name: "accepts valid input",
+    },
+}
+```
+
+Tests should read like documentation.
+
+---
+
+# 61. Benchmark Architecture
+
+Performance-sensitive lessons may contain:
+
+```text
+BenchmarkX
+```
+
+Benchmarks should explain:
+
+```text
+what is measured
+why it matters
+what changed
+what the benchmark demonstrates
+```
+
+A benchmark without interpretation is incomplete educational material.
+
+---
+
+# 62. Fuzz Testing Architecture
+
+Fuzz tests are useful for:
+
+```text
+parsers
+encoders
+decoders
+protocol handling
+string transformations
+validation
+URL processing
+serialization
+```
+
+Fuzzing should be introduced after the underlying testing concepts are understood.
+
+---
+
+# 63. Debugging Architecture
+
+Debugging is a first-class curriculum.
+
+Coverage should include:
+
+```text
+reading compiler errors
+reading stack traces
+using targeted debug output
+breakpoints
+watch expressions
+call stacks
+VS Code debugging
+goroutine inspection
+race detector
+deadlock investigation
+memory investigation
+CPU investigation
+pprof
+go trace
+runtime diagnostics
+production failure analysis
+```
+
+The core debugging loop is:
+
+```text
+Observe
+   ↓
+Reproduce
+   ↓
+Isolate
+   ↓
+Form Hypothesis
+   ↓
+Instrument
+   ↓
+Test Hypothesis
+   ↓
+Fix
+   ↓
+Regression Test
+   ↓
+Document
+```
+
+---
+
+# 64. Failure Engineering Labs
+
+The repository should contain intentionally broken systems and failure experiments.
+
+Suggested structure:
+
+```text
+labs/failure-engineering/
+├── database-timeout/
+├── connection-reset/
+├── goroutine-leak/
+├── deadlock/
+├── race-condition/
+├── queue-overflow/
+├── context-cancellation/
+├── dependency-failure/
+├── partial-failure/
+└── graceful-shutdown/
+```
+
+Standard failure-lab process:
+
+```text
+Observe Failure
+   ↓
+Reproduce Failure
+   ↓
+Understand Failure
+   ↓
+Diagnose Failure
+   ↓
+Fix Failure
+   ↓
+Test Fix
+   ↓
+Prevent Regression
+```
+
+Failure scenarios may include:
+
+```text
+database unavailable
+network timeout
+dependency timeout
+slow consumer
+full queue
+connection reset
+invalid input
+duplicate request
+service restart
+partial failure
+context cancellation
+process termination
+```
+
+---
+
+# 65. Performance Philosophy
+
+Performance work must be evidence-driven.
+
+Preferred sequence:
+
+```text
+Correctness
+   ↓
+Measurement
+   ↓
+Profiling
+   ↓
+Optimization
+   ↓
+Benchmark
+   ↓
+Regression Protection
+```
+
+A slower implementation may be better when it is:
+
+```text
+simpler
+clearer
+safer
+more maintainable
+```
+
+and sufficiently fast.
+
+---
+
+# 66. Security Philosophy
+
+Security is a cross-cutting concern.
+
+It should appear throughout the curriculum:
+
+```text
+Level 07 → secure HTTP handling
+Level 08 → safe SQL queries
+Level 09 → security-focused tests
+Level 12 → secure configuration
+Level 13 → dedicated security curriculum
+Level 15 → secure network communication
+Level 16 → cloud security concepts
+Level 19 → security architecture
+```
+
+Security should never be treated as only one chapter.
+
+---
+
+# 67. Observability Architecture
+
+Production projects should progressively introduce:
+
+```text
+logs
+metrics
+traces
+health checks
+profiles
+diagnostics
+```
+
+Mental model:
+
+```text
+Logs
+  → what happened?
+
+Metrics
+  → how often?
+
+Traces
+  → where did it happen?
+
+Profiles
+  → why is it expensive?
+```
+
+Operational context is required; simply invoking an observability API is not sufficient.
+
+---
+
+# 68. Production Readiness Model
+
+Examples can be viewed along this maturity scale:
+
+```text
+Level 0 — Works
+Level 1 — Clear
+Level 2 — Tested
+Level 3 — Maintainable
+Level 4 — Observable
+Level 5 — Secure
+Level 6 — Resilient
+Level 7 — Performant
+Level 8 — Operable
+Level 9 — Production Ready
+```
+
+Not every lesson needs Level 9.
+
+Production projects should.
+
+---
+
+# 69. HTTP Architecture
+
+Representative production-oriented design:
 
 ```text
 HTTP Request
@@ -2668,103 +2517,65 @@ Repository
 Database / External Service
 ```
 
-Responses move in the reverse direction:
+Responses travel in the reverse direction.
+
+This is a reference architecture, not a mandatory architecture.
+
+---
+
+# 70. Database Architecture
+
+Preferred separation:
 
 ```text
-Database
-   ↓
-Repository
-   ↓
-Domain
+Transport
    ↓
 Application
    ↓
-Handler
+Domain
    ↓
-HTTP Response
+Repository
+   ↓
+Database
 ```
 
-This is a reference architecture, not an absolute requirement.
+The curriculum should demonstrate both simple `database/sql` usage and larger repository-driven systems.
+
+Abstractions should appear when complexity creates a reason for them.
 
 ---
 
-# 68. Dependency Injection
+# 71. Configuration Architecture
 
-The repository demonstrates dependency injection primarily through ordinary Go techniques:
+Conceptual precedence:
 
 ```text
-interfaces
-constructors
-function parameters
-struct dependencies
+defaults
+   ↓
+configuration file
+   ↓
+environment variables
+   ↓
+runtime flags
 ```
 
-For example:
+Secrets must never be committed.
 
-```go
-type Service struct {
-    repo Repository
-}
-```
-
-Rather than automatically introducing a dependency injection framework.
-
-The goal is to teach:
-
-> **Dependency injection is a design technique, not a library requirement.**
-
----
-
-# 69. Interfaces
-
-Interfaces should usually be defined close to the consumer that needs them.
-
-The repository discourages large speculative interfaces such as:
-
-```go
-type Everything interface {
-    Create()
-    Read()
-    Update()
-    Delete()
-    Notify()
-    Export()
-    ...
-}
-```
-
-Instead, interfaces should remain small and purposeful.
-
----
-
-# 70. Package Visibility
-
-Package APIs should be intentional.
-
-Preferred:
+Examples may appear in:
 
 ```text
-small public surface
-large private implementation
+.env.example
 ```
 
-rather than:
-
-```text
-everything exported
-```
-
-The repository should demonstrate why unexported identifiers are useful for preserving invariants and reducing API complexity.
+but real credentials remain external.
 
 ---
 
-# 71. Generated Files
+# 72. Generated Files
 
-Generated files should be clearly distinguished from hand-written source.
+Generated artifacts must be clearly distinguished from hand-written source.
 
-Generated artifacts should not be confused with lessons.
-
-If generation is required, document:
+Generation documentation should identify:
 
 ```text
 source
@@ -2773,15 +2584,15 @@ command
 output
 ```
 
-and ensure contributors know how to reproduce the output.
+Generated output should be reproducible.
 
 ---
 
-# 72. Determinism
+# 73. Determinism
 
-Repository tooling should strive for deterministic output.
+Repository tooling should produce deterministic output.
 
-Examples include:
+Examples:
 
 ```text
 lesson indexes
@@ -2790,9 +2601,7 @@ generated metadata
 validation reports
 ```
 
-Sort order should be stable.
-
-This makes:
+Stable sorting makes:
 
 ```text
 diffs smaller
@@ -2803,11 +2612,11 @@ automation predictable
 
 ---
 
-# 73. Cross-Platform Design
+# 74. Cross-Platform Design
 
-The curriculum should acknowledge that Go supports multiple operating systems.
+The curriculum should acknowledge Go's multi-platform model.
 
-Examples should avoid unnecessary assumptions about:
+Avoid unnecessary assumptions about:
 
 ```text
 Linux-only paths
@@ -2819,33 +2628,31 @@ signals
 process semantics
 ```
 
-When platform-specific behavior is intentionally demonstrated, the lesson should make that explicit.
+Platform-specific behavior should be explicit.
 
 ---
 
-# 74. Build Tags
+# 75. Build Tags
 
-Build tags may be used for platform-specific or optional examples.
+Build tags may be used for intentional platform-specific or optional examples.
 
-When used, they should be explained in the corresponding README.
+Example:
 
-Examples:
-
-```text
+```go
 //go:build linux
 ```
 
 or:
 
-```text
+```go
 //go:build windows
 ```
 
-The repository should not use build tags merely to hide broken code.
+Build tags must never be used merely to hide broken code.
 
 ---
 
-# 75. Examples and Exercises
+# 76. Examples and Exercises
 
 A strong lesson distinguishes:
 
@@ -2854,9 +2661,10 @@ Explanation
 Example
 Exercise
 Solution
+Challenge
 ```
 
-A learner should be able to attempt an exercise without opening the solution immediately.
+The learner should be able to attempt an exercise without immediately opening the solution.
 
 Where appropriate:
 
@@ -2864,28 +2672,62 @@ Where appropriate:
 exercise.go
 ```
 
-contains an intentionally incomplete task, while:
+contains an intentionally incomplete task and:
 
 ```text
 solution.go
 ```
 
-contains the reference implementation.
+contains a reference implementation.
 
 ---
 
-# 76. Reference Implementations
+# 77. Challenge Architecture
 
-Reference implementations are not necessarily claimed to be the only correct implementation.
+A challenge should require reasoning beyond copying the example.
 
-Where multiple approaches are valid, documentation should describe:
+Suggested progression:
+
+```text
+Exercise
+   ↓
+Variation
+   ↓
+Edge Case
+   ↓
+Constraint Change
+   ↓
+Debugging Challenge
+   ↓
+Design Challenge
+```
+
+A strong challenge may ask the learner to make a system:
+
+```text
+faster
+safer
+more testable
+more observable
+more concurrent
+more resilient
+```
+
+---
+
+# 78. Reference Implementations
+
+Reference implementations are not necessarily the only correct implementation.
+
+When multiple approaches are valid, explain:
 
 ```text
 Option A
 Trade-offs
 Option B
 Trade-offs
-Recommended context
+Recommended Context
+When Not To Use It
 ```
 
 This is especially important for:
@@ -2902,30 +2744,477 @@ performance
 
 ---
 
-# 77. Production Readiness Model
+# 79. Interview & Career Readiness
 
-Examples can be viewed along this maturity scale:
+The repository should gradually connect technical mastery to professional reasoning.
+
+Lesson-level interview categories may include:
 
 ```text
-Level 0 — Works
-Level 1 — Clear
-Level 2 — Tested
-Level 3 — Maintainable
-Level 4 — Observable
-Level 5 — Secure
-Level 6 — Resilient
-Level 7 — Performant
-Level 8 — Operable
-Level 9 — Production Ready
+Concept Questions
+Implementation Questions
+Debugging Questions
+Code Review Questions
+Trade-off Questions
+Production Questions
+System Design Questions
+Failure Questions
 ```
 
-Not every educational example needs to reach Level 9.
+Example progression:
 
-Production projects should.
+```text
+Beginner:
+What is a slice?
+
+Intermediate:
+Why can append change the backing array?
+
+Advanced:
+How would you investigate unexpected allocations?
+
+Expert:
+How would you design a high-throughput concurrent pipeline with bounded memory?
+```
+
+The goal is not interview memorization.
+
+The goal is transferable engineering reasoning.
 
 ---
 
-# 78. Observability Expectations for Projects
+# 80. Documentation Architecture
+
+Documentation is distributed according to scope.
+
+```text
+README.md
+    ↓
+repository overview
+
+Docs
+    ↓
+architecture / roadmap / statistics / metadata
+
+Level README
+    ↓
+level-specific guidance
+
+Lesson README
+    ↓
+exact lesson guidance
+
+Project README
+    ↓
+system-specific documentation
+```
+
+This prevents the root README from becoming an unmaintainable encyclopedia.
+
+---
+
+# 81. Root README Responsibility
+
+The root README should answer:
+
+```text
+What is this repository?
+Why does it exist?
+Who is it for?
+How large is it?
+How is it organized?
+Where should I start?
+What technologies are covered?
+What projects exist?
+How do I contribute?
+What makes this repository different?
+```
+
+The root README should impress a first-time visitor without requiring them to read the entire curriculum.
+
+---
+
+# 82. Lesson Index
+
+`docs/LESSON_INDEX.json` acts as machine-readable repository metadata.
+
+Its purpose is to support:
+
+```text
+scripts
+automation
+future web interfaces
+search tools
+analytics
+curriculum dashboards
+AI-assisted navigation
+```
+
+Recommended stable metadata:
+
+```text
+level
+level number
+lesson number
+title
+path
+category
+difficulty
+status
+estimated time
+prerequisites
+skills
+production relevance
+project connections
+```
+
+Running the indexing tool twice against the same repository should produce equivalent output.
+
+---
+
+# 83. Repository Verification
+
+The repository includes tooling such as:
+
+```text
+scripts/count-go.sh
+scripts/verify.sh
+scripts/generate-lesson-index.sh
+scripts/validate-lessons.sh
+```
+
+Typical checks:
+
+```text
+Go file count
+required directories
+required files
+README presence
+formatting
+module validity
+lesson index generation
+test execution
+documentation structure
+metadata validity
+filename conventions
+broken links where detectable
+```
+
+The repository should fail loudly when architectural assumptions are violated.
+
+---
+
+# 84. Lesson Quality Gate
+
+A meaningful lesson should satisfy applicable checks:
+
+```text
+[ ] Explanation exists
+[ ] Learning objectives exist
+[ ] Prerequisites are defined
+[ ] Example compiles
+[ ] Example is formatted
+[ ] Errors are handled
+[ ] Important edge cases are documented
+[ ] Common mistakes are documented
+[ ] Exercise exists when appropriate
+[ ] Solution exists when appropriate
+[ ] Tests exist when appropriate
+[ ] README links are valid
+[ ] No hidden dependencies
+[ ] Metadata is valid
+[ ] CI passes
+```
+
+The check should be stricter for advanced and production lessons than for tiny introductory lessons.
+
+---
+
+# 85. CI Architecture
+
+Continuous integration lives under:
+
+```text
+.github/workflows/ci.yml
+```
+
+Conceptually:
+
+```text
+Push / Pull Request
+        ↓
+Repository Integrity
+        ↓
+Formatting
+        ↓
+Module Validation
+        ↓
+Static Analysis
+        ↓
+Unit Tests
+        ↓
+Race Detection
+        ↓
+Linting
+        ↓
+Lesson Validation
+        ↓
+PASS / FAIL
+```
+
+CI must protect repository quality without becoming unnecessarily fragile for legitimate educational contributions.
+
+---
+
+# 86. Linting Architecture
+
+The repository uses:
+
+```text
+.golangci.yml
+```
+
+as the central static-analysis configuration.
+
+Linting should emphasize:
+
+```text
+correctness
+clarity
+dead code
+error handling
+style consistency
+common Go mistakes
+```
+
+Linting exists to improve engineering quality, not to become an arbitrary style contest.
+
+---
+
+# 87. GitHub Workflow
+
+Intended contributor workflow:
+
+```text
+Fork
+  ↓
+Create branch
+  ↓
+Create / update lesson
+  ↓
+Write documentation
+  ↓
+Write tests when appropriate
+  ↓
+Run verification
+  ↓
+Commit
+  ↓
+Push
+  ↓
+Open Pull Request
+  ↓
+CI
+  ↓
+Review
+  ↓
+Merge
+```
+
+---
+
+# 88. Commit Architecture
+
+Recommended conventional style:
+
+```text
+feat: add context cancellation lessons
+fix: correct worker pool shutdown behavior
+docs: expand concurrency architecture guide
+test: add table-driven HTTP handler tests
+refactor: simplify repository dependency wiring
+perf: reduce allocations in parser benchmark
+chore: update CI toolchain
+```
+
+Avoid low-information commits:
+
+```text
+update
+changes
+stuff
+fix
+new
+final
+done
+```
+
+---
+
+# 89. Branching Strategy
+
+Stable branch:
+
+```text
+main
+```
+
+Feature work may use:
+
+```text
+feat/*
+fix/*
+docs/*
+refactor/*
+perf/*
+```
+
+Examples:
+
+```text
+feat/worker-pool-lessons
+docs/improve-architecture-guide
+fix/http-timeout-example
+perf/json-parser-benchmark
+```
+
+---
+
+# 90. Scalability Rules
+
+The repository must scale beyond thousands of files without becoming structurally fragile.
+
+Prohibited growth patterns:
+
+```text
+giant packages
+giant lesson files
+monolithic examples
+global shared state
+cross-level coupling
+hidden dependencies
+```
+
+Preferred growth pattern:
+
+```text
+more focused lessons
+more focused packages
+more focused tests
+more focused experiments
+more focused projects
+```
+
+---
+
+# 91. File Count Governance
+
+The repository has a target of approximately:
+
+```text
+1,235 .go files
+```
+
+This is not a hard upper boundary.
+
+New files are justified when they provide:
+
+```text
+new concept
+new implementation technique
+new edge case
+new engineering pattern
+new test strategy
+new production scenario
+new performance investigation
+new security scenario
+new debugging investigation
+```
+
+The guiding question is:
+
+> **Would an experienced developer defend the existence of this file?**
+
+If not, the file probably should not exist.
+
+---
+
+# 92. Duplication Policy
+
+Two files may implement similar concepts if their educational purpose differs.
+
+Acceptable:
+
+```text
+01-basic-worker-pool.go
+07-production-worker-pool-with-cancellation.go
+```
+
+Not useful:
+
+```text
+worker_pool_01.go
+worker_pool_02.go
+worker_pool_03.go
+```
+
+where differences are only superficial.
+
+Educational duplication must have a stated purpose.
+
+---
+
+# 93. Determining Real Educational Value
+
+Before adding a lesson, ask:
+
+```text
+Does this teach a new concept?
+Does it expose a meaningful edge case?
+Does it improve debugging ability?
+Does it demonstrate a new engineering technique?
+Does it improve system design understanding?
+Does it demonstrate a production trade-off?
+Does it connect previously learned concepts?
+```
+
+If every answer is no, the lesson probably does not belong.
+
+---
+
+# 94. Failure Analysis Architecture
+
+Advanced projects should document important failures using a repeatable structure:
+
+```text
+Incident
+   ↓
+Impact
+   ↓
+Symptoms
+   ↓
+Detection
+   ↓
+Timeline
+   ↓
+Root Cause
+   ↓
+Contributing Factors
+   ↓
+Immediate Fix
+   ↓
+Permanent Fix
+   ↓
+Regression Protection
+   ↓
+Lessons Learned
+```
+
+This teaches production thinking instead of only successful-path programming.
+
+---
+
+# 95. Operational Readiness
 
 A production-style service should ideally provide:
 
@@ -2937,9 +3226,12 @@ metrics
 traces
 error reporting
 graceful shutdown
+configuration documentation
+run instructions
+failure behavior documentation
 ```
 
-Advanced projects should additionally consider:
+Advanced services should consider:
 
 ```text
 distributed tracing
@@ -2949,715 +3241,417 @@ dependency metrics
 queue depth
 retry counts
 failure rates
+capacity limits
 ```
 
 ---
 
-# 79. Failure Engineering
+# 96. Project Completion Contract
 
-The repository intentionally teaches what happens when systems fail.
+A production-style project should not be called complete merely because it runs.
 
-Examples include:
-
-```text
-database unavailable
-network timeout
-dependency timeout
-slow consumer
-full queue
-connection reset
-invalid input
-duplicate request
-service restart
-partial failure
-context cancellation
-process termination
-```
-
-A production system is not judged only by its behavior when everything works.
-
-It is judged by how it behaves when things go wrong.
-
----
-
-# 80. Distributed System Architecture
-
-Distributed projects should explicitly document:
+It should document, as appropriate:
 
 ```text
-service boundaries
-communication protocol
-data ownership
+problem statement
+requirements
+architecture
+API contracts
+data model
+configuration
+security model
 failure modes
-consistency model
-retry policy
-idempotency
+testing strategy
 observability
-deployment model
-scaling strategy
-```
-
-A diagram should answer:
-
-```text
-Who talks to whom?
-Who owns the data?
-What happens when a dependency disappears?
+deployment
+operational procedures
+known limitations
+trade-offs
+future improvements
 ```
 
 ---
 
-# 81. Reliability Model
-
-Advanced projects should consider:
+# 97. Learning Progression Example — Concurrency
 
 ```text
-availability
-latency
-throughput
-error rates
-resource utilization
-recovery time
-recovery point
-failure domains
-blast radius
+Lesson 1
+What is a goroutine?
+      ↓
+Lesson 2
+Starting multiple goroutines
+      ↓
+Lesson 3
+Waiting with sync.WaitGroup
+      ↓
+Lesson 4
+Communicating with channels
+      ↓
+Lesson 5
+select
+      ↓
+Lesson 6
+Cancellation with context
+      ↓
+Lesson 7
+Worker pool
+      ↓
+Lesson 8
+Backpressure
+      ↓
+Lesson 9
+Graceful shutdown
+      ↓
+Failure Lab
+Deadlock / race / leak
+      ↓
+Project
+Production job processing service
 ```
 
-The repository introduces these ideas progressively rather than presenting them all at once.
+This is the difference between a collection of examples and an engineered curriculum.
 
 ---
 
-# 82. Security Boundary Model
-
-Security responsibilities should exist across layers.
+# 98. Learning Progression Example — Web Development
 
 ```text
-Client
-  ↓
-Transport Security
-  ↓
-Authentication
-  ↓
-Authorization
-  ↓
-Validation
-  ↓
-Application Logic
-  ↓
-Persistence Security
-  ↓
-Operational Security
-```
-
-No single layer should be treated as a complete security solution.
-
----
-
-# 83. Performance Boundary Model
-
-Performance can be analyzed at several levels:
-
-```text
-Algorithm
+HTTP request
    ↓
-Data structure
+http.Handler
    ↓
-Allocation
+handler composition
    ↓
-CPU
+routing
    ↓
-Concurrency
+middleware
    ↓
-I/O
+JSON
    ↓
-Database
+validation
    ↓
-Network
+error responses
    ↓
-System architecture
-```
-
-Optimization should begin at the level where evidence indicates the bottleneck exists.
-
----
-
-# 84. Repository Quality Gates
-
-A contribution should ideally satisfy:
-
-```text
-✓ code compiles
-✓ gofmt clean
-✓ go vet clean
-✓ tests pass
-✓ race detector considered where appropriate
-✓ lint rules satisfied
-✓ documentation exists
-✓ naming is meaningful
-✓ scope is focused
-✓ no unnecessary dependencies
-✓ no secrets
-✓ no dead examples
-```
-
-Production-oriented work may require stricter project-specific checks.
-
----
-
-# 85. Documentation Quality Gates
-
-Every significant addition should be understandable without reading its author's mind.
-
-Documentation should make clear:
-
-```text
-What?
-Why?
-How?
-When?
-Trade-offs?
-Common mistakes?
-```
-
-If an example requires extensive verbal explanation outside the repository, the repository documentation is probably incomplete.
-
----
-
-# 86. Security and Privacy Rules
-
-The repository must never contain:
-
-```text
-real API keys
-passwords
-private tokens
-production credentials
-private certificates
-customer information
-personal secrets
-```
-
-Use placeholders:
-
-```text
-YOUR_API_KEY
-example-secret
-localhost
-127.0.0.1
-```
-
----
-
-# 87. Open Source Architecture
-
-The repository is designed so an external contributor can enter at multiple depths.
-
-### Beginner contributor
-
-```text
-documentation
-typos
-lesson improvements
-small examples
-tests
-```
-
-### Intermediate contributor
-
-```text
-new lesson
-new exercise
-new standard-library example
-```
-
-### Advanced contributor
-
-```text
-architecture improvements
-production projects
-performance investigations
-distributed systems examples
-tooling
-```
-
-### Expert contributor
-
-```text
-runtime internals
-architecture research
-advanced performance
-distributed systems
-production engineering
-```
-
----
-
-# 88. Portfolio Architecture
-
-The project should communicate engineering maturity immediately to a GitHub visitor.
-
-A visitor should be able to identify:
-
-```text
-Scale
-Structure
-Depth
-Consistency
-Testing
-Automation
-Production mindset
-Documentation
-```
-
-without opening hundreds of source files.
-
-The architecture therefore intentionally exposes important information at the top level:
-
-```text
-README.md
-docs/ARCHITECTURE.md
-docs/ROADMAP.md
-docs/REPOSITORY_STATS.md
-docs/LESSON_INDEX.json
-```
-
----
-
-# 89. First-Time Visitor Experience
-
-A new GitHub visitor should ideally follow this path:
-
-```text
-README.md
+service layer
    ↓
-Repository Stats
+repository
    ↓
-Roadmap
+PostgreSQL
    ↓
-Architecture
+testing
    ↓
-Level 00
+observability
    ↓
-Interesting lesson
+security
    ↓
-Production project
-   ↓
-Testing / CI
-```
-
-The repository should create curiosity without overwhelming the visitor.
-
----
-
-# 90. Navigation Strategy
-
-Every level should expose:
-
-```text
-Previous Level
-Current Level
-Next Level
-```
-
-where appropriate.
-
-Every lesson should ideally expose:
-
-```text
-Back to Level
-Prerequisites
-Learning Objectives
-Related Lessons
-Next Lesson
-```
-
-This turns the repository into a navigable curriculum rather than a static directory tree.
-
----
-
-# 91. Searchability
-
-Filenames should be descriptive enough for GitHub search.
-
-A developer searching for:
-
-```text
-context
-worker pool
-HTTP timeout
-PostgreSQL transaction
-JWT
-benchmark
-mutex
-gRPC
 graceful shutdown
+   ↓
+production API
 ```
-
-should find relevant examples naturally.
-
-This is one reason meaningful filenames are mandatory.
 
 ---
 
-# 92. Machine-Readable Metadata
-
-The architecture intentionally separates:
+# 99. Learning Progression Example — Performance
 
 ```text
-human-readable documentation
+correct implementation
+   ↓
+benchmark
+   ↓
+measure
+   ↓
+profile
+   ↓
+identify bottleneck
+   ↓
+change one thing
+   ↓
+benchmark again
+   ↓
+compare
+   ↓
+document trade-off
+   ↓
+add regression protection
 ```
 
-from:
+Optimization without measurement is not considered professional performance engineering.
+
+---
+
+# 100. Learning Progression Example — Security
 
 ```text
-machine-readable metadata
+secure default
+   ↓
+unsafe example
+   ↓
+understand vulnerability
+   ↓
+exploit in controlled lab
+   ↓
+fix vulnerability
+   ↓
+write regression test
+   ↓
+add security controls
+   ↓
+review production implications
 ```
 
-Human-readable:
+All vulnerability demonstrations must remain defensive and educational.
+
+---
+
+# 101. Architectural Decision Records
+
+Significant repository-wide decisions should be documented under:
 
 ```text
-README.md
-ARCHITECTURE.md
-ROADMAP.md
+docs/decisions/
 ```
 
-Machine-readable:
+Suggested format:
 
 ```text
-LESSON_INDEX.json
+ADR-0001-lesson-isolation.md
+ADR-0002-metadata-index.md
+ADR-0003-project-boundaries.md
 ```
 
-This makes the repository suitable for future:
+Each ADR should include:
 
 ```text
-search interfaces
-learning dashboards
-progress trackers
-documentation websites
+Context
+Problem
+Options
+Decision
+Consequences
+Status
+```
+
+The purpose is to preserve architectural reasoning over time.
+
+---
+
+# 102. Compatibility & Versioning
+
+The repository should explicitly document:
+
+```text
+supported Go version
+module versioning strategy
+compatibility expectations
+generated-code policy
+dependency upgrade policy
+breaking-change policy
+```
+
+A learning repository must make version-sensitive examples easy to identify.
+
+---
+
+# 103. Deprecation Policy
+
+Deprecated lessons should not simply disappear.
+
+Where practical, documentation should say:
+
+```text
+Why deprecated?
+What replaced it?
+What should learners study instead?
+Is the old example still historically useful?
+```
+
+Deprecation is part of knowledge maintenance.
+
+---
+
+# 104. Maintenance Strategy
+
+The repository should be maintained as a living engineering system.
+
+Maintenance includes:
+
+```text
+updating examples
+updating documentation
+updating dependencies
+checking CI
+checking links
+checking lesson metadata
+removing obsolete patterns
+reviewing project architecture
+revalidating performance claims
+revalidating security guidance
+```
+
+A large repository without maintenance becomes a museum rather than a learning system.
+
+---
+
+# 105. Long-Term Evolution
+
+The repository should evolve in this direction:
+
+```text
+Large Repository
+      ↓
+Structured Curriculum
+      ↓
+Machine-Readable Metadata
+      ↓
+Knowledge Graph
+      ↓
+Automated Validation
+      ↓
+Interactive Learning
+      ↓
+Curriculum Dashboard
+      ↓
+Engineering Portfolio
+```
+
+Possible future capabilities include:
+
+```text
+searchable lesson graph
+learning progress dashboard
+skill coverage reports
+automated lesson quality reports
 AI-assisted navigation
-```
-
-without restructuring the source tree.
-
----
-
-# 93. Future Web Interface
-
-The repository can eventually power a web learning interface.
-
-Conceptually:
-
-```text
-Git Repository
-      ↓
-Lesson Index
-      ↓
-Metadata Processor
-      ↓
-Learning API
-      ↓
-Web Interface
-```
-
-Possible future features:
-
-```text
-lesson search
-difficulty filtering
-progress tracking
-skill maps
-topic graphs
-completion dashboards
-recommended lessons
-project pathways
-```
-
-The repository architecture intentionally leaves room for this evolution.
-
----
-
-# 94. Future Automation
-
-Future automation may generate:
-
-```text
-progress dashboards
-lesson statistics
-topic indexes
-dependency graphs
-difficulty reports
-coverage reports
-broken-link reports
-test summaries
-```
-
-This is why repository metadata must remain structured and deterministic.
-
----
-
-# 95. Architecture Invariants
-
-The following rules should remain true as the repository evolves:
-
-### Invariant 1
-
-Every lesson has a clear purpose.
-
-### Invariant 2
-
-Every significant lesson has documentation.
-
-### Invariant 3
-
-Go source remains formatted.
-
-### Invariant 4
-
-Examples remain independently understandable whenever practical.
-
-### Invariant 5
-
-Production projects remain separated from tiny educational examples.
-
-### Invariant 6
-
-Secrets never enter the repository.
-
-### Invariant 7
-
-Dependencies are introduced deliberately.
-
-### Invariant 8
-
-Repository statistics remain reproducible.
-
-### Invariant 9
-
-Lesson indexing remains deterministic.
-
-### Invariant 10
-
-The repository should become deeper over time, not merely larger.
-
----
-
-# 96. What This Architecture Is Not
-
-This repository is intentionally **not**:
-
-```text
-a syntax cheat sheet
-a random collection of snippets
-a single giant Go application
-a framework-specific tutorial
-a copy of official documentation
-a directory created only to reach 1,111 files
-a benchmark-only repository
-a microservice-only repository
-```
-
-It is designed as an integrated engineering curriculum.
-
----
-
-# 97. Architectural Decision Principle
-
-When deciding whether something belongs in the repository, ask:
-
-```text
-Does it teach something meaningful?
-        ↓
-Does it demonstrate engineering judgment?
-        ↓
-Does it provide reusable reference value?
-        ↓
-Does it improve the curriculum?
-        ↓
-Does it belong at this level?
-```
-
-If the answer is consistently no, it should not be added.
-
----
-
-# 98. Long-Term Growth Model
-
-The intended evolution is:
-
-```text
-Phase 1
-───────
-1,111+ foundational implementations
-
-        ↓
-
-Phase 2
-───────
-deeper tests and production examples
-
-        ↓
-
-Phase 3
-───────
-advanced systems and performance studies
-
-        ↓
-
-Phase 4
-───────
-distributed systems and cloud-native projects
-
-        ↓
-
-Phase 5
-───────
-expert-level engineering research
-
-        ↓
-
-Phase 6
-───────
-interactive learning platform / documentation site
-```
-
-Growth should preserve conceptual organization.
-
----
-
-# 99. The Repository as an Engineering System
-
-The final architecture can be summarized as:
-
-```text
-                           GO ENGINEERING
-                                 │
-          ┌──────────────────────┼──────────────────────┐
-          │                      │                      │
-          ▼                      ▼                      ▼
-     CURRICULUM               PROJECTS               TOOLING
-       00 → 19                 01 → 10             CI / Scripts
-          │                      │                      │
-          ▼                      ▼                      ▼
-      Concepts             Production Code          Quality
-          │                      │                      │
-          └──────────────────────┼──────────────────────┘
-                                 │
-                                 ▼
-                         ENGINEERING MATURITY
-                                 │
-        ┌──────────────┬─────────┼─────────┬──────────────┐
-        ▼              ▼         ▼         ▼              ▼
-     Testing        Security  Perf.    Reliability   Observability
-        │              │         │         │              │
-        └──────────────┴─────────┼─────────┴──────────────┘
-                                 │
-                                 ▼
-                       PROFESSIONAL GO ENGINEER
+interactive exercises
+failure laboratories
+benchmark history
+architecture decision browser
 ```
 
 ---
 
-# 100. Final Architecture Philosophy
+# 106. Core Architectural Principles
 
-The repository is intentionally built around the progression:
+The repository should continuously preserve these principles:
 
 ```text
-ZERO
- ↓
-UNDERSTAND
- ↓
-PRACTICE
- ↓
-BUILD
- ↓
-TEST
- ↓
-DESIGN
- ↓
-DEBUG
- ↓
-OPTIMIZE
- ↓
-SECURE
- ↓
-OBSERVE
- ↓
-SCALE
- ↓
-OPERATE
- ↓
-MASTER
+1. Teach understanding, not memorization.
+2. Prefer clarity before abstraction.
+3. Prefer correctness before optimization.
+4. Demonstrate the standard library before unnecessary dependencies.
+5. Keep lessons independently understandable.
+6. Keep projects independently runnable.
+7. Treat tests as part of design.
+8. Treat debugging as a core engineering skill.
+9. Treat security as cross-cutting.
+10. Treat observability as part of production design.
+11. Teach failures, not only happy paths.
+12. Explain trade-offs instead of declaring universal rules.
+13. Scale repository structure through focused units.
+14. Keep educational complexity proportional to the concept.
+15. Add files because they add value, not because statistics look impressive.
+16. Preserve reproducibility and deterministic tooling.
+17. Make architectural reasoning visible.
+18. Connect isolated concepts to complete systems.
+19. Teach engineering judgment, not framework worship.
+20. Always ask why.
 ```
-
-The ultimate goal is not to create a developer who can recognize Go syntax.
-
-The goal is to create a developer who can take a real engineering problem, reason about its constraints, design an appropriate solution, implement it cleanly, test it rigorously, secure it, observe it, optimize it, operate it, and explain the trade-offs behind the design.
-
-That is the architectural purpose of this repository.
 
 ---
 
-# 101. Final Repository Contract
+# 107. The Final Learning Model
 
-The repository should remain recognizable as this ecosystem even when it grows substantially beyond its current size.
-
-The current baseline is:
+The complete repository learning model is:
 
 ```text
-1,235 .go files
-20 curriculum levels
-1,160 lesson directories
-63 Go test files
-1,191 README files
-10 production-style projects
+                         GO ENGINEERING
+                                │
+                                ▼
+                           UNDERSTAND
+                                │
+                                ▼
+                            EXPERIMENT
+                                │
+                                ▼
+                             PRACTICE
+                                │
+                                ▼
+                              BREAK
+                                │
+                                ▼
+                             DEBUG
+                                │
+                                ▼
+                              TEST
+                                │
+                                ▼
+                            EXPLAIN
+                                │
+                                ▼
+                             DESIGN
+                                │
+                                ▼
+                              BUILD
+                                │
+                                ▼
+                            OBSERVE
+                                │
+                                ▼
+                           OPTIMIZE
+                                │
+                                ▼
+                            SECURE
+                                │
+                                ▼
+                            OPERATE
+                                │
+                                ▼
+                         ENGINEERING JUDGMENT
 ```
-
-The long-term goal is not:
-
-```text
-more files
-```
-
-The long-term goal is:
-
-```text
-more engineering depth
-```
-
-The repository succeeds when a developer can enter at any level and answer three questions:
-
-```text
-What am I learning?
-Why does it matter?
-Where is this used in real systems?
-```
-
-And it succeeds at the professional level when an experienced engineer looking through the repository can say:
-
-> **This is not merely a Go tutorial. This is a deliberately engineered Go engineering knowledge base.**
 
 ---
 
-## Architectural North Star
+# 108. Final Repository Philosophy
+
+This repository is not intended to be a random collection of Go examples.
+
+It is not intended to maximize file counts.
+
+It is not intended to teach every framework.
+
+It is not intended to promote unnecessary abstraction.
+
+It is not intended to hide complexity behind libraries.
+
+It is designed to produce a developer who can:
 
 ```text
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│                   GO ENGINEERING                            │
-│                                                             │
-│   From first `go run`                                      │
-│   to production distributed systems                         │
-│                                                             │
-│   Learn → Build → Test → Design → Secure → Optimize        │
-│                         → Operate → Master                  │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+read code
+write code
+test code
+debug code
+review code
+design systems
+understand trade-offs
+handle failures
+reason about performance
+think about security
+operate services
+learn independently
 ```
 
-**Every directory has a reason.
-Every lesson has a purpose.
-Every implementation teaches something.
-Every project connects concepts to reality.
-Every engineering decision should be explainable.**
+The final objective is not:
 
-That is the architecture of the repository.
+```text
+I know Go syntax.
+```
+
+The final objective is:
+
+```text
+I can use Go to reason about, design, build, test,
+debug, secure, optimize, and operate real systems.
+```
+
+> **Learn the language. Understand the runtime. Practice the engineering. Build the systems. Study the failures. Explain the trade-offs.**
+
+That is the purpose of this repository.
