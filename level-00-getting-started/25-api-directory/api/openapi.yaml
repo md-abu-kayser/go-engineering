@@ -1,0 +1,31 @@
+# A minimal illustrative OpenAPI fragment. api/ directories in real
+# projects often hold non-Go contract files like this one alongside (or
+# instead of) Go types — generated clients/servers, or just documentation
+# for consumers of the API.
+openapi: 3.0.3
+info:
+  title: Greeter API
+  version: "1.0.0"
+paths:
+  /greet:
+    post:
+      summary: Return a greeting for the given name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: A greeting message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
