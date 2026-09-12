@@ -1,12 +1,27 @@
+// Lesson 22: Path Traversal Defense
+//
+// Goal: Validate untrusted input at a boundary and compare authentication
+// material in constant time rather than relying on ordinary string equality.
 package main
 
-import "fmt"
+import (
+	"crypto/subtle"
+	"fmt"
+	"strings"
+)
 
-func PathTraversalDefense() string {
-	const topic = "Path Traversal Defense"
-	return topic
+const lesson = "Path Traversal Defense"
+
+func validToken(token string) bool {
+	if len(token) != 12 || strings.ContainsAny(token, " \t\n") {
+		return false
+	}
+	expected := "safe-token-1"
+	return subtle.ConstantTimeCompare([]byte(token), []byte(expected)) == 1
 }
 
 func main() {
-	fmt.Println(PathTraversalDefense())
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("accepted: %t\n", validToken("safe-token-1"))
+	fmt.Printf("rejected: %t\n", validToken("not-a-token!"))
 }

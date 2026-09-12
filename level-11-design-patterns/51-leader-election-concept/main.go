@@ -1,13 +1,30 @@
+// Lesson 51: Leader Election Concept
+//
+// Goal: Make a variation point explicit with a small interface, then choose
+// a concrete policy at the composition point.
 package main
 
 import "fmt"
 
-func summarizeLeaderElectionConcept() (string, int) {
-	topic := "Leader Election Concept"
-	return topic, len(topic)
+const lesson = "Leader Election Concept"
+
+type discount interface {
+	Apply(int) int
+}
+
+type percentageDiscount struct {
+	percent int
+}
+
+func (d percentageDiscount) Apply(price int) int {
+	return price - price*d.percent/100
+}
+
+func checkout(policy discount, price int) int {
+	return policy.Apply(price)
 }
 
 func main() {
-	topic, length := summarizeLeaderElectionConcept()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("discounted total: %d\n", checkout(percentageDiscount{percent: 15}, 200))
 }

@@ -1,13 +1,36 @@
+// Lesson 16: Strconv Format Int
+//
+// Goal: Combine focused standard-library packages to transform a value
+// without introducing an application dependency.
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"strings"
+)
 
-func summarizeStrconvFormatInt() (string, int) {
-	topic := "Strconv Format Int"
-	return topic, len(topic)
+const lesson = "Strconv Format Int"
+
+type report struct {
+	Words []string `json:"words"`
+	Count int      `json:"count"`
+}
+
+func summarize(input string) (report, error) {
+	words := strings.Fields(strings.ToLower(input))
+	return report{Words: words, Count: len(words)}, nil
 }
 
 func main() {
-	topic, length := summarizeStrconvFormatInt()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	value, err := summarize("Go keeps standard-library tools close at hand")
+	if err != nil {
+		panic(err)
+	}
+	encoded, err := json.Marshal(value)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(string(encoded))
 }

@@ -1,16 +1,29 @@
+// Lesson 29: Httptest Server
+//
+// Goal: Put behavior in a small pure function so a table-driven test,
+// benchmark, fuzz target, or example test can exercise it deterministically.
 package main
 
 import (
 	"fmt"
-	"net/http"
+	"strings"
 )
 
-func handlerHttptestServer(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	_, _ = fmt.Fprint(w, "Httptest Server")
+const lesson = "Httptest Server"
+
+func normalizeName(input string) (string, error) {
+	name := strings.TrimSpace(input)
+	if name == "" {
+		return "", fmt.Errorf("name is required")
+	}
+	return strings.ToLower(name), nil
 }
 
 func main() {
-	h := http.HandlerFunc(handlerHttptestServer)
-	fmt.Printf("handler=%T topic=Httptest Server\n", h)
+	name, err := normalizeName("  Asha  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("normalized value: %s\n", name)
 }

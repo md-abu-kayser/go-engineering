@@ -1,11 +1,20 @@
+// Lesson 25: Slice Header Internals
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
+
+const lesson = "Slice Header Internals"
 
 func main() {
-	values := make([]int, 0, 4)
-	for i := 1; i <= 4; i++ {
-		values = append(values, i*i)
-	}
-	fmt.Printf("Slice Header Internals: %v len=%d cap=%d\n", values, len(values), cap(values))
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

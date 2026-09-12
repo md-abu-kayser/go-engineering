@@ -1,18 +1,37 @@
+// Lesson 26: Error Budget Awareness
+//
+// Goal: Validate configuration before work starts and emit a structured,
+// deterministic operational record that can be inspected by people or tools.
 package main
 
 import (
-	"errors"
+	"encoding/json"
 	"fmt"
 )
 
-var errExample = errors.New("example failure")
+const lesson = "Error Budget Awareness"
 
-func main() {
-	if err := validate(); err != nil {
-		fmt.Printf("Error Budget Awareness: %v\n", err)
-	}
+type config struct {
+	Service string
+	Port    int
 }
 
-func validate() error {
-	return errExample
+func (c config) Validate() error {
+	if c.Service == "" || c.Port < 1 || c.Port > 65535 {
+		return fmt.Errorf("invalid service configuration")
+	}
+	return nil
+}
+
+func main() {
+	value := config{Service: "catalog", Port: 8080}
+	if err := value.Validate(); err != nil {
+		panic(err)
+	}
+	record, err := json.Marshal(map[string]any{"event": "service.ready", "service": value.Service, "port": value.Port})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(string(record))
 }

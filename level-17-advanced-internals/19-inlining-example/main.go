@@ -1,9 +1,20 @@
+// Lesson 19: Inlining Example
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-// Inlining Example is a focused micro-lesson in the Go engineering journey.
+const lesson = "Inlining Example"
+
 func main() {
-	value := "Inlining Example"
-	fmt.Printf("lesson=1006 topic=%q\n", value)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

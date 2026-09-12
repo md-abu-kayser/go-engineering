@@ -1,9 +1,25 @@
+// Lesson 48: Cloud Queue Boundary
+//
+// Goal: Separate deployment configuration from application behavior and make
+// readiness a small, testable decision rather than an implicit side effect.
 package main
 
 import "fmt"
 
-// Cloud Queue Boundary is a focused micro-lesson in the Go engineering journey.
+const lesson = "Cloud Queue Boundary"
+
+type deployment struct {
+	Name     string
+	Replicas int
+	Database bool
+}
+
+func (d deployment) Ready() bool {
+	return d.Name != "" && d.Replicas > 0 && d.Database
+}
+
 func main() {
-	value := "Cloud Queue Boundary"
-	fmt.Printf("lesson=0977 topic=%q\n", value)
+	service := deployment{Name: "catalog", Replicas: 3, Database: true}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("%s ready: %t\n", service.Name, service.Ready())
 }

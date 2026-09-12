@@ -1,12 +1,20 @@
+// Lesson 11: Stack Growth
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func StackGrowth() string {
-	const topic = "Stack Growth"
-	return topic
-}
+const lesson = "Stack Growth"
 
 func main() {
-	fmt.Println(StackGrowth())
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

@@ -1,9 +1,23 @@
+// Lesson 09: Strings Builder Benchmark
+//
+// Goal: Make the allocation decision visible: preallocate the exact output
+// size and keep the hot loop free of formatting and interface conversion.
 package main
 
 import "fmt"
 
+const lesson = "Strings Builder Benchmark"
+
+func double(values []int) []int {
+	output := make([]int, len(values))
+	for index, value := range values {
+		output[index] = value * 2
+	}
+	return output
+}
+
 func main() {
-	input := "Strings Builder Benchmark"
-	result := len(input) > 0
-	fmt.Printf("subject=%q passes-basic-check=%t\n", input, result)
+	input := []int{1, 2, 3, 4}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("input: %v output: %v\n", input, double(input))
 }

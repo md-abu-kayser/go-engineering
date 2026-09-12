@@ -1,13 +1,23 @@
+// Lesson 48: Hot Path Design
+//
+// Goal: Make the allocation decision visible: preallocate the exact output
+// size and keep the hot loop free of formatting and interface conversion.
 package main
 
 import "fmt"
 
-func summarizeHotPathDesign() (string, int) {
-	topic := "Hot Path Design"
-	return topic, len(topic)
+const lesson = "Hot Path Design"
+
+func double(values []int) []int {
+	output := make([]int, len(values))
+	for index, value := range values {
+		output[index] = value * 2
+	}
+	return output
 }
 
 func main() {
-	topic, length := summarizeHotPathDesign()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	input := []int{1, 2, 3, 4}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("input: %v output: %v\n", input, double(input))
 }

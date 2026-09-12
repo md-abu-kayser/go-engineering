@@ -1,12 +1,20 @@
+// Lesson 26: String Header Internals
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func StringHeaderInternals() string {
-	const topic = "String Header Internals"
-	return topic
-}
+const lesson = "String Header Internals"
 
 func main() {
-	fmt.Println(StringHeaderInternals())
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

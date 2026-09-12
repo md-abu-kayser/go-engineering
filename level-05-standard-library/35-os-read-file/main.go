@@ -1,9 +1,36 @@
+// Lesson 35: Os Read File
+//
+// Goal: Combine focused standard-library packages to transform a value
+// without introducing an application dependency.
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"strings"
+)
 
-// Os Read File is a focused micro-lesson in the Go engineering journey.
+const lesson = "Os Read File"
+
+type report struct {
+	Words []string `json:"words"`
+	Count int      `json:"count"`
+}
+
+func summarize(input string) (report, error) {
+	words := strings.Fields(strings.ToLower(input))
+	return report{Words: words, Count: len(words)}, nil
+}
+
 func main() {
-	value := "Os Read File"
-	fmt.Printf("lesson=0325 topic=%q\n", value)
+	value, err := summarize("Go keeps standard-library tools close at hand")
+	if err != nil {
+		panic(err)
+	}
+	encoded, err := json.Marshal(value)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(string(encoded))
 }

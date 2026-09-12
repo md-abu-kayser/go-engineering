@@ -1,13 +1,36 @@
+// Lesson 13: Unicode Is
+//
+// Goal: Combine focused standard-library packages to transform a value
+// without introducing an application dependency.
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"strings"
+)
 
-func summarizeUnicodeIs() (string, int) {
-	topic := "Unicode Is"
-	return topic, len(topic)
+const lesson = "Unicode Is"
+
+type report struct {
+	Words []string `json:"words"`
+	Count int      `json:"count"`
+}
+
+func summarize(input string) (report, error) {
+	words := strings.Fields(strings.ToLower(input))
+	return report{Words: words, Count: len(words)}, nil
 }
 
 func main() {
-	topic, length := summarizeUnicodeIs()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	value, err := summarize("Go keeps standard-library tools close at hand")
+	if err != nil {
+		panic(err)
+	}
+	encoded, err := json.Marshal(value)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(string(encoded))
 }

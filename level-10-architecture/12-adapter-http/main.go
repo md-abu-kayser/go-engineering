@@ -1,16 +1,35 @@
+// Lesson 12: Adapter Http
+//
+// Goal: Keep a use case dependent on a consumer-owned port, allowing the
+// composition root to choose infrastructure without leaking it inward.
 package main
 
-import (
-	"fmt"
-	"net/http"
-)
+import "fmt"
 
-func handlerAdapterHttp(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	_, _ = fmt.Fprint(w, "Adapter Http")
+const lesson = "Adapter Http"
+
+type eventPublisher interface {
+	Publish(string) error
+}
+
+type memoryPublisher struct {
+	events []string
+}
+
+func (p *memoryPublisher) Publish(event string) error {
+	p.events = append(p.events, event)
+	return nil
+}
+
+func registerUser(publisher eventPublisher, name string) error {
+	return publisher.Publish("user.registered:" + name)
 }
 
 func main() {
-	h := http.HandlerFunc(handlerAdapterHttp)
-	fmt.Printf("handler=%T topic=Adapter Http\n", h)
+	publisher := &memoryPublisher{}
+	if err := registerUser(publisher, "Asha"); err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("published: %v\n", publisher.events)
 }

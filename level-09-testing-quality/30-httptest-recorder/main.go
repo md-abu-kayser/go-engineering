@@ -1,16 +1,29 @@
+// Lesson 30: Httptest Recorder
+//
+// Goal: Put behavior in a small pure function so a table-driven test,
+// benchmark, fuzz target, or example test can exercise it deterministically.
 package main
 
 import (
 	"fmt"
-	"net/http"
+	"strings"
 )
 
-func handlerHttptestRecorder(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	_, _ = fmt.Fprint(w, "Httptest Recorder")
+const lesson = "Httptest Recorder"
+
+func normalizeName(input string) (string, error) {
+	name := strings.TrimSpace(input)
+	if name == "" {
+		return "", fmt.Errorf("name is required")
+	}
+	return strings.ToLower(name), nil
 }
 
 func main() {
-	h := http.HandlerFunc(handlerHttptestRecorder)
-	fmt.Printf("handler=%T topic=Httptest Recorder\n", h)
+	name, err := normalizeName("  Asha  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("normalized value: %s\n", name)
 }

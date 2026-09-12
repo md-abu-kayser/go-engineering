@@ -1,19 +1,41 @@
+// Lesson 05: Cli Json Tool
+//
+// Goal: Assemble a tiny vertical slice: validate a request, apply a domain
+// rule, persist it through a focused store, and return the resulting value.
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	"strings"
 )
 
-type lesson struct {
-	Topic string `json:"topic"`
-	Level int    `json:"level"`
+const lesson = "Cli Json Tool"
+
+type item struct {
+	ID   string
+	Name string
+}
+
+type store struct {
+	items map[string]item
+}
+
+func (s *store) Create(id, name string) (item, error) {
+	name = strings.TrimSpace(name)
+	if id == "" || name == "" {
+		return item{}, fmt.Errorf("id and name are required")
+	}
+	created := item{ID: id, Name: name}
+	s.items[id] = created
+	return created, nil
 }
 
 func main() {
-	b, err := json.Marshal(lesson{Topic: "Cli Json Tool", Level: 18})
+	data := store{items: make(map[string]item)}
+	created, err := data.Create("item-1", "first item")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(string(b))
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("created: %#v\n", created)
 }

@@ -1,13 +1,32 @@
+// Lesson 17: File Walk
+//
+// Goal: Parse a command option through an isolated FlagSet so the command
+// can be exercised without changing the process-wide flag state.
 package main
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+	"io"
+)
 
-func summarizeFileWalk() (string, int) {
-	topic := "File Walk"
-	return topic, len(topic)
+const lesson = "File Walk"
+
+func parse(args []string) (string, error) {
+	set := flag.NewFlagSet("lesson", flag.ContinueOnError)
+	set.SetOutput(io.Discard)
+	name := set.String("name", "engineer", "name to greet")
+	if err := set.Parse(args); err != nil {
+		return "", err
+	}
+	return *name, nil
 }
 
 func main() {
-	topic, length := summarizeFileWalk()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	name, err := parse([]string{"-name", "Asha"})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("hello, %s\n", name)
 }

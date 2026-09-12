@@ -1,12 +1,20 @@
+// Lesson 50: Custom Allocator Concept
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func CustomAllocatorConcept() string {
-	const topic = "Custom Allocator Concept"
-	return topic
-}
+const lesson = "Custom Allocator Concept"
 
 func main() {
-	fmt.Println(CustomAllocatorConcept())
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

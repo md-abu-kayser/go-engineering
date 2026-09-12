@@ -1,12 +1,30 @@
+// Lesson 21: Embedding Structs
+//
+// Goal: Compose small types so the outer type can reuse focused behavior
+// without inheriting hidden state.
 package main
 
 import "fmt"
 
-func EmbeddingStructs() string {
-	const topic = "Embedding Structs"
-	return topic
+const lesson = "Embedding Structs"
+
+type logger struct{}
+
+func (logger) Log(message string) string {
+	return "log: " + message
+}
+
+type service struct {
+	logger
+	name string
+}
+
+func (s service) Start() string {
+	return s.Log(s.name + " started")
 }
 
 func main() {
-	fmt.Println(EmbeddingStructs())
+	svc := service{name: "billing"}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(svc.Start())
 }

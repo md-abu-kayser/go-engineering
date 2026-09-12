@@ -1,13 +1,30 @@
+// Lesson 18: Iterator Pattern
+//
+// Goal: Make a variation point explicit with a small interface, then choose
+// a concrete policy at the composition point.
 package main
 
 import "fmt"
 
-func summarizeIteratorPattern() (string, int) {
-	topic := "Iterator Pattern"
-	return topic, len(topic)
+const lesson = "Iterator Pattern"
+
+type discount interface {
+	Apply(int) int
+}
+
+type percentageDiscount struct {
+	percent int
+}
+
+func (d percentageDiscount) Apply(price int) int {
+	return price - price*d.percent/100
+}
+
+func checkout(policy discount, price int) int {
+	return policy.Apply(price)
 }
 
 func main() {
-	topic, length := summarizeIteratorPattern()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("discounted total: %d\n", checkout(percentageDiscount{percent: 15}, 200))
 }

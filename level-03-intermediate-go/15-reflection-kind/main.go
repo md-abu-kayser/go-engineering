@@ -1,12 +1,30 @@
+// Lesson 15: Reflection Kind
+//
+// Goal: Inspect a value at runtime while keeping the reflected operation
+// small and explicit.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
-func ReflectionKind() string {
-	const topic = "Reflection Kind"
-	return topic
+const lesson = "Reflection Kind"
+
+type profile struct {
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+}
+
+func describe(value any) string {
+	typeOfValue := reflect.TypeOf(value)
+	valueOfValue := reflect.ValueOf(value)
+	return fmt.Sprintf("type=%s kind=%s value=%v", typeOfValue, valueOfValue.Kind(), value)
 }
 
 func main() {
-	fmt.Println(ReflectionKind())
+	person := profile{Name: "Asha", Age: 28}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(describe(person))
+	fmt.Printf("first field tag: %q\n", reflect.TypeOf(person).Field(0).Tag.Get("json"))
 }

@@ -1,9 +1,30 @@
+// Lesson 14: Reflection Types
+//
+// Goal: Inspect a value at runtime while keeping the reflected operation
+// small and explicit.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
-// Reflection Types is a focused micro-lesson in the Go engineering journey.
+const lesson = "Reflection Types"
+
+type profile struct {
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+}
+
+func describe(value any) string {
+	typeOfValue := reflect.TypeOf(value)
+	valueOfValue := reflect.ValueOf(value)
+	return fmt.Sprintf("type=%s kind=%s value=%v", typeOfValue, valueOfValue.Kind(), value)
+}
+
 func main() {
-	value := "Reflection Types"
-	fmt.Printf("lesson=0189 topic=%q\n", value)
+	person := profile{Name: "Asha", Age: 28}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(describe(person))
+	fmt.Printf("first field tag: %q\n", reflect.TypeOf(person).Field(0).Tag.Get("json"))
 }

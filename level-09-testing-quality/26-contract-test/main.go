@@ -1,9 +1,29 @@
+// Lesson 26: Contract Test
+//
+// Goal: Put behavior in a small pure function so a table-driven test,
+// benchmark, fuzz target, or example test can exercise it deterministically.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
+
+const lesson = "Contract Test"
+
+func normalizeName(input string) (string, error) {
+	name := strings.TrimSpace(input)
+	if name == "" {
+		return "", fmt.Errorf("name is required")
+	}
+	return strings.ToLower(name), nil
+}
 
 func main() {
-	input := "Contract Test"
-	result := len(input) > 0
-	fmt.Printf("subject=%q passes-basic-check=%t\n", input, result)
+	name, err := normalizeName("  Asha  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("normalized value: %s\n", name)
 }

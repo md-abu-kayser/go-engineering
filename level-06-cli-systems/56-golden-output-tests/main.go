@@ -1,9 +1,32 @@
+// Lesson 56: Golden Output Tests
+//
+// Goal: Parse a command option through an isolated FlagSet so the command
+// can be exercised without changing the process-wide flag state.
 package main
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+	"io"
+)
+
+const lesson = "Golden Output Tests"
+
+func parse(args []string) (string, error) {
+	set := flag.NewFlagSet("lesson", flag.ContinueOnError)
+	set.SetOutput(io.Discard)
+	name := set.String("name", "engineer", "name to greet")
+	if err := set.Parse(args); err != nil {
+		return "", err
+	}
+	return *name, nil
+}
 
 func main() {
-	input := "Golden Output Tests"
-	result := len(input) > 0
-	fmt.Printf("subject=%q passes-basic-check=%t\n", input, result)
+	name, err := parse([]string{"-name", "Asha"})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("hello, %s\n", name)
 }

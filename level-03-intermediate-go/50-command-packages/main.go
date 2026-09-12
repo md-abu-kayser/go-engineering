@@ -1,9 +1,28 @@
+// Lesson 50: Command Packages
+//
+// Goal: Keep a package boundary narrow by depending on the behavior a
+// consumer needs rather than a concrete infrastructure type.
 package main
 
 import "fmt"
 
-// Command Packages is a focused micro-lesson in the Go engineering journey.
+const lesson = "Command Packages"
+
+type notifier interface {
+	Send(string) string
+}
+
+type consoleNotifier struct{}
+
+func (consoleNotifier) Send(message string) string {
+	return "sent: " + message
+}
+
+func notify(n notifier, message string) string {
+	return n.Send(message)
+}
+
 func main() {
-	value := "Command Packages"
-	fmt.Printf("lesson=0225 topic=%q\n", value)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(notify(consoleNotifier{}, "package boundaries stay replaceable"))
 }

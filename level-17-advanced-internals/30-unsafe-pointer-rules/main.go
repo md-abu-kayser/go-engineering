@@ -1,13 +1,20 @@
+// Lesson 30: Unsafe Pointer Rules
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func summarizeUnsafePointerRules() (string, int) {
-	topic := "Unsafe Pointer Rules"
-	return topic, len(topic)
-}
+const lesson = "Unsafe Pointer Rules"
 
 func main() {
-	topic, length := summarizeUnsafePointerRules()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

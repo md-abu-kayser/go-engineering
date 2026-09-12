@@ -1,12 +1,20 @@
+// Lesson 29: Type Descriptor Awareness
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func TypeDescriptorAwareness() string {
-	const topic = "Type Descriptor Awareness"
-	return topic
-}
+const lesson = "Type Descriptor Awareness"
 
 func main() {
-	fmt.Println(TypeDescriptorAwareness())
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

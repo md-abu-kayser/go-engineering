@@ -1,13 +1,25 @@
+// Lesson 34: Dependency Upgrades
+//
+// Goal: Model an explicit dependency boundary. Real module and build-tool
+// commands belong outside application code; the application consumes an
+// already-validated configuration value.
 package main
 
 import "fmt"
 
-func summarizeDependencyUpgrades() (string, int) {
-	topic := "Dependency Upgrades"
-	return topic, len(topic)
+const lesson = "Dependency Upgrades"
+
+type dependency struct {
+	Path    string
+	Version string
+}
+
+func (d dependency) Valid() bool {
+	return d.Path != "" && d.Version != ""
 }
 
 func main() {
-	topic, length := summarizeDependencyUpgrades()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	dep := dependency{Path: "example.com/catalog", Version: "v1.4.0"}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("%s at %s is valid: %t\n", dep.Path, dep.Version, dep.Valid())
 }

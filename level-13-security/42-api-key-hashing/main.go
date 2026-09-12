@@ -1,16 +1,27 @@
+// Lesson 42: Api Key Hashing
+//
+// Goal: Validate untrusted input at a boundary and compare authentication
+// material in constant time rather than relying on ordinary string equality.
 package main
 
 import (
+	"crypto/subtle"
 	"fmt"
-	"net/http"
+	"strings"
 )
 
-func handlerApiKeyHashing(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	_, _ = fmt.Fprint(w, "Api Key Hashing")
+const lesson = "Api Key Hashing"
+
+func validToken(token string) bool {
+	if len(token) != 12 || strings.ContainsAny(token, " \t\n") {
+		return false
+	}
+	expected := "safe-token-1"
+	return subtle.ConstantTimeCompare([]byte(token), []byte(expected)) == 1
 }
 
 func main() {
-	h := http.HandlerFunc(handlerApiKeyHashing)
-	fmt.Printf("handler=%T topic=Api Key Hashing\n", h)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("accepted: %t\n", validToken("safe-token-1"))
+	fmt.Printf("rejected: %t\n", validToken("not-a-token!"))
 }

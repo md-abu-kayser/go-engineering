@@ -1,9 +1,35 @@
+// Lesson 06: Dependency Inversion
+//
+// Goal: Keep a use case dependent on a consumer-owned port, allowing the
+// composition root to choose infrastructure without leaking it inward.
 package main
 
 import "fmt"
 
-// Dependency Inversion is a focused micro-lesson in the Go engineering journey.
+const lesson = "Dependency Inversion"
+
+type eventPublisher interface {
+	Publish(string) error
+}
+
+type memoryPublisher struct {
+	events []string
+}
+
+func (p *memoryPublisher) Publish(event string) error {
+	p.events = append(p.events, event)
+	return nil
+}
+
+func registerUser(publisher eventPublisher, name string) error {
+	return publisher.Publish("user.registered:" + name)
+}
+
 func main() {
-	value := "Dependency Inversion"
-	fmt.Printf("lesson=0587 topic=%q\n", value)
+	publisher := &memoryPublisher{}
+	if err := registerUser(publisher, "Asha"); err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("published: %v\n", publisher.events)
 }

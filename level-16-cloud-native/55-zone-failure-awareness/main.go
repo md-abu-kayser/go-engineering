@@ -1,18 +1,25 @@
+// Lesson 55: Zone Failure Awareness
+//
+// Goal: Separate deployment configuration from application behavior and make
+// readiness a small, testable decision rather than an implicit side effect.
 package main
 
-import (
-	"errors"
-	"fmt"
-)
+import "fmt"
 
-var errExample = errors.New("example failure")
+const lesson = "Zone Failure Awareness"
 
-func main() {
-	if err := validate(); err != nil {
-		fmt.Printf("Zone Failure Awareness: %v\n", err)
-	}
+type deployment struct {
+	Name     string
+	Replicas int
+	Database bool
 }
 
-func validate() error {
-	return errExample
+func (d deployment) Ready() bool {
+	return d.Name != "" && d.Replicas > 0 && d.Database
+}
+
+func main() {
+	service := deployment{Name: "catalog", Replicas: 3, Database: true}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("%s ready: %t\n", service.Name, service.Ready())
 }

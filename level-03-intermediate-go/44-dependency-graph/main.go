@@ -1,9 +1,28 @@
+// Lesson 44: Dependency Graph
+//
+// Goal: Keep a package boundary narrow by depending on the behavior a
+// consumer needs rather than a concrete infrastructure type.
 package main
 
 import "fmt"
 
-// Dependency Graph is a focused micro-lesson in the Go engineering journey.
+const lesson = "Dependency Graph"
+
+type notifier interface {
+	Send(string) string
+}
+
+type consoleNotifier struct{}
+
+func (consoleNotifier) Send(message string) string {
+	return "sent: " + message
+}
+
+func notify(n notifier, message string) string {
+	return n.Send(message)
+}
+
 func main() {
-	value := "Dependency Graph"
-	fmt.Printf("lesson=0219 topic=%q\n", value)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(notify(consoleNotifier{}, "package boundaries stay replaceable"))
 }

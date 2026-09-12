@@ -1,12 +1,20 @@
+// Lesson 20: Devirtualization Awareness
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func DevirtualizationAwareness() string {
-	const topic = "Devirtualization Awareness"
-	return topic
-}
+const lesson = "Devirtualization Awareness"
 
 func main() {
-	fmt.Println(DevirtualizationAwareness())
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

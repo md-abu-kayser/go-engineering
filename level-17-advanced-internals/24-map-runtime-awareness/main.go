@@ -1,9 +1,20 @@
+// Lesson 24: Map Runtime Awareness
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
+
+const lesson = "Map Runtime Awareness"
 
 func main() {
-	counts := map[string]int{"MapRuntimeAwareness": 1}
-	counts["total"]++
-	fmt.Printf("Map Runtime Awareness: %v\n", counts)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

@@ -1,12 +1,29 @@
+// Lesson 24: Client Side Discovery
+//
+// Goal: Put a message in an explicit envelope so a receiver can correlate,
+// deduplicate, and evolve data independently of transport details.
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
-func ClientSideDiscovery() string {
-	const topic = "Client Side Discovery"
-	return topic
+const lesson = "Client Side Discovery"
+
+type envelope struct {
+	ID      string `json:"id"`
+	Type    string `json:"type"`
+	Version int    `json:"version"`
+	Payload string `json:"payload"`
 }
 
 func main() {
-	fmt.Println(ClientSideDiscovery())
+	message := envelope{ID: "evt-42", Type: "order.created", Version: 1, Payload: "order-7"}
+	encoded, err := json.Marshal(message)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(string(encoded))
 }

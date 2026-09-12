@@ -1,13 +1,27 @@
+// Lesson 17: X Content Type Options
+//
+// Goal: Validate untrusted input at a boundary and compare authentication
+// material in constant time rather than relying on ordinary string equality.
 package main
 
-import "fmt"
+import (
+	"crypto/subtle"
+	"fmt"
+	"strings"
+)
 
-func summarizeXContentTypeOptions() (string, int) {
-	topic := "X Content Type Options"
-	return topic, len(topic)
+const lesson = "X Content Type Options"
+
+func validToken(token string) bool {
+	if len(token) != 12 || strings.ContainsAny(token, " \t\n") {
+		return false
+	}
+	expected := "safe-token-1"
+	return subtle.ConstantTimeCompare([]byte(token), []byte(expected)) == 1
 }
 
 func main() {
-	topic, length := summarizeXContentTypeOptions()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("accepted: %t\n", validToken("safe-token-1"))
+	fmt.Printf("rejected: %t\n", validToken("not-a-token!"))
 }

@@ -1,9 +1,32 @@
+// Lesson 45: Os Specific Build Tags
+//
+// Goal: Parse a command option through an isolated FlagSet so the command
+// can be exercised without changing the process-wide flag state.
 package main
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+	"io"
+)
 
-// Os Specific Build Tags is a focused micro-lesson in the Go engineering journey.
+const lesson = "Os Specific Build Tags"
+
+func parse(args []string) (string, error) {
+	set := flag.NewFlagSet("lesson", flag.ContinueOnError)
+	set.SetOutput(io.Discard)
+	name := set.String("name", "engineer", "name to greet")
+	if err := set.Parse(args); err != nil {
+		return "", err
+	}
+	return *name, nil
+}
+
 func main() {
-	value := "Os Specific Build Tags"
-	fmt.Printf("lesson=0393 topic=%q\n", value)
+	name, err := parse([]string{"-name", "Asha"})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("hello, %s\n", name)
 }

@@ -1,10 +1,10 @@
-# Go Engineering 1111+
+# Go Engineering
 
 > **A world-class Go learning ecosystem: from absolute beginner to production engineering and expert systems design.**
 
 This repository is intentionally built as more than a tutorial. It is a structured **Go University + Engineering Handbook + Practical Code Laboratory + Production Reference + Portfolio**.
 
-![Go](https://img.shields.io/badge/Go-1.26-00ADD8?logo=go&logoColor=white) ![Lessons](https://img.shields.io/badge/Go%20files-1%2C000%2B-111111) ![Levels](https://img.shields.io/badge/levels-20-6f42c1) ![Focus](https://img.shields.io/badge/focus-production%20engineering-0f766e)
+![Go](https://img.shields.io/badge/Go-1.26-00ADD8?logo=go&logoColor=white) ![Lessons](https://img.shields.io/badge/Go%20files-1%2C111%2B-111111) ![Levels](https://img.shields.io/badge/levels-20-6f42c1) ![Focus](https://img.shields.io/badge/focus-production%20engineering-0f766e)
 
 ## Why this exists
 
@@ -34,28 +34,28 @@ A serious Go learner needs more than syntax examples. They need progressively ha
 
 Every level has 55 focused lesson directories. Every lesson has its own `README.md` and executable `.go` example so that concepts remain isolated and navigable.
 
-| Level | Domain | Lessons | Path |
-|---:|---|---:|---|
-| 00 | Getting Started | 58 | `level-00-getting-started/` |
-| 01 | Go Fundamentals | 58 | `level-01-fundamentals/` |
-| 02 | Core Go | 59 | `level-02-core-language/` |
-| 03 | Intermediate Go | 57 | `level-03-intermediate-go/` |
-| 04 | Concurrency | 58 | `level-04-concurrency/` |
-| 05 | Standard Library Mastery | 58 | `level-05-standard-library/` |
-| 06 | CLI & Systems Programming | 57 | `level-06-cli-systems/` |
-| 07 | Web Development | 58 | `level-07-web-development/` |
-| 08 | Databases & Data Access | 59 | `level-08-databases/` |
-| 09 | Testing & Quality | 59 | `level-09-testing-quality/` |
-| 10 | Go Architecture | 58 | `level-10-architecture/` |
-| 11 | Design Patterns | 57 | `level-11-design-patterns/` |
-| 12 | Production Engineering | 59 | `level-12-production-engineering/` |
-| 13 | Security | 58 | `level-13-security/` |
-| 14 | Performance & Optimization | 58 | `level-14-performance/` |
-| 15 | Networking & Distributed Systems | 58 | `level-15-networking-distributed/` |
-| 16 | Microservices & Cloud-Native Go | 58 | `level-16-cloud-native/` |
-| 17 | Advanced Go Engineering | 57 | `level-17-advanced-internals/` |
-| 18 | Real-World Projects | 56 | `level-18-real-world-projects/` |
-| 19 | Expert / Professional Go | 60 | `level-19-expert-professional/` |
+| Level | Domain                           | Lessons | Path                               |
+| ----: | -------------------------------- | ------: | ---------------------------------- |
+|    00 | Getting Started                  |      58 | `level-00-getting-started/`        |
+|    01 | Go Fundamentals                  |      58 | `level-01-fundamentals/`           |
+|    02 | Core Go                          |      59 | `level-02-core-language/`          |
+|    03 | Intermediate Go                  |      57 | `level-03-intermediate-go/`        |
+|    04 | Concurrency                      |      58 | `level-04-concurrency/`            |
+|    05 | Standard Library Mastery         |      58 | `level-05-standard-library/`       |
+|    06 | CLI & Systems Programming        |      57 | `level-06-cli-systems/`            |
+|    07 | Web Development                  |      58 | `level-07-web-development/`        |
+|    08 | Databases & Data Access          |      59 | `level-08-databases/`              |
+|    09 | Testing & Quality                |      59 | `level-09-testing-quality/`        |
+|    10 | Go Architecture                  |      58 | `level-10-architecture/`           |
+|    11 | Design Patterns                  |      57 | `level-11-design-patterns/`        |
+|    12 | Production Engineering           |      59 | `level-12-production-engineering/` |
+|    13 | Security                         |      58 | `level-13-security/`               |
+|    14 | Performance & Optimization       |      58 | `level-14-performance/`            |
+|    15 | Networking & Distributed Systems |      58 | `level-15-networking-distributed/` |
+|    16 | Microservices & Cloud-Native Go  |      58 | `level-16-cloud-native/`           |
+|    17 | Advanced Go Engineering          |      57 | `level-17-advanced-internals/`     |
+|    18 | Real-World Projects              |      56 | `level-18-real-world-projects/`    |
+|    19 | Expert / Professional Go         |      60 | `level-19-expert-professional/`    |
 
 ## The 1,111+ `.go` philosophy
 

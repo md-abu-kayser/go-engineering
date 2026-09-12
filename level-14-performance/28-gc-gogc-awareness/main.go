@@ -1,9 +1,23 @@
+// Lesson 28: Gc Gogc Awareness
+//
+// Goal: Make the allocation decision visible: preallocate the exact output
+// size and keep the hot loop free of formatting and interface conversion.
 package main
 
 import "fmt"
 
-// Gc Gogc Awareness is a focused micro-lesson in the Go engineering journey.
+const lesson = "Gc Gogc Awareness"
+
+func double(values []int) []int {
+	output := make([]int, len(values))
+	for index, value := range values {
+		output[index] = value * 2
+	}
+	return output
+}
+
 func main() {
-	value := "Gc Gogc Awareness"
-	fmt.Printf("lesson=0841 topic=%q\n", value)
+	input := []int{1, 2, 3, 4}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("input: %v output: %v\n", input, double(input))
 }

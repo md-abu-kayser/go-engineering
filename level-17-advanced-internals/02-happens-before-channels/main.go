@@ -1,10 +1,20 @@
+// Lesson 02: Happens Before Channels
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
+
+const lesson = "Happens Before Channels"
 
 func main() {
-	ch := make(chan string, 1)
-	ch <- "Happens Before Channels"
-	value, ok := <-ch
-	fmt.Printf("%q ok=%t\n", value, ok)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

@@ -1,13 +1,29 @@
+// Lesson 20: T Helper
+//
+// Goal: Put behavior in a small pure function so a table-driven test,
+// benchmark, fuzz target, or example test can exercise it deterministically.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-func summarizeTHelper() (string, int) {
-	topic := "T Helper"
-	return topic, len(topic)
+const lesson = "T Helper"
+
+func normalizeName(input string) (string, error) {
+	name := strings.TrimSpace(input)
+	if name == "" {
+		return "", fmt.Errorf("name is required")
+	}
+	return strings.ToLower(name), nil
 }
 
 func main() {
-	topic, length := summarizeTHelper()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	name, err := normalizeName("  Asha  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("normalized value: %s\n", name)
 }

@@ -1,9 +1,20 @@
+// Lesson 04: Happens Before Atomic
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-// Happens Before Atomic is a focused micro-lesson in the Go engineering journey.
+const lesson = "Happens Before Atomic"
+
 func main() {
-	value := "Happens Before Atomic"
-	fmt.Printf("lesson=0991 topic=%q\n", value)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

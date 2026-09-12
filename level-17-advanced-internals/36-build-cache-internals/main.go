@@ -1,13 +1,20 @@
+// Lesson 36: Build Cache Internals
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func summarizeBuildCacheInternals() (string, int) {
-	topic := "Build Cache Internals"
-	return topic, len(topic)
-}
+const lesson = "Build Cache Internals"
 
 func main() {
-	topic, length := summarizeBuildCacheInternals()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

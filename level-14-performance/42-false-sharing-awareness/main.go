@@ -1,13 +1,23 @@
+// Lesson 42: False Sharing Awareness
+//
+// Goal: Make the allocation decision visible: preallocate the exact output
+// size and keep the hot loop free of formatting and interface conversion.
 package main
 
 import "fmt"
 
-func summarizeFalseSharingAwareness() (string, int) {
-	topic := "False Sharing Awareness"
-	return topic, len(topic)
+const lesson = "False Sharing Awareness"
+
+func double(values []int) []int {
+	output := make([]int, len(values))
+	for index, value := range values {
+		output[index] = value * 2
+	}
+	return output
 }
 
 func main() {
-	topic, length := summarizeFalseSharingAwareness()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	input := []int{1, 2, 3, 4}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("input: %v output: %v\n", input, double(input))
 }

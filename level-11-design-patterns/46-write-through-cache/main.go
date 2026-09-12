@@ -1,9 +1,30 @@
+// Lesson 46: Write Through Cache
+//
+// Goal: Make a variation point explicit with a small interface, then choose
+// a concrete policy at the composition point.
 package main
 
 import "fmt"
 
-// Write Through Cache is a focused micro-lesson in the Go engineering journey.
+const lesson = "Write Through Cache"
+
+type discount interface {
+	Apply(int) int
+}
+
+type percentageDiscount struct {
+	percent int
+}
+
+func (d percentageDiscount) Apply(price int) int {
+	return price - price*d.percent/100
+}
+
+func checkout(policy discount, price int) int {
+	return policy.Apply(price)
+}
+
 func main() {
-	value := "Write Through Cache"
-	fmt.Printf("lesson=0685 topic=%q\n", value)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("discounted total: %d\n", checkout(percentageDiscount{percent: 15}, 200))
 }

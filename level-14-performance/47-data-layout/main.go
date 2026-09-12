@@ -1,12 +1,23 @@
+// Lesson 47: Data Layout
+//
+// Goal: Make the allocation decision visible: preallocate the exact output
+// size and keep the hot loop free of formatting and interface conversion.
 package main
 
 import "fmt"
 
-func DataLayout() string {
-	const topic = "Data Layout"
-	return topic
+const lesson = "Data Layout"
+
+func double(values []int) []int {
+	output := make([]int, len(values))
+	for index, value := range values {
+		output[index] = value * 2
+	}
+	return output
 }
 
 func main() {
-	fmt.Println(DataLayout())
+	input := []int{1, 2, 3, 4}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("input: %v output: %v\n", input, double(input))
 }

@@ -1,18 +1,29 @@
+// Lesson 18: Parallel Tests
+//
+// Goal: Put behavior in a small pure function so a table-driven test,
+// benchmark, fuzz target, or example test can exercise it deterministically.
 package main
 
 import (
 	"fmt"
-	"sync"
+	"strings"
 )
 
+const lesson = "Parallel Tests"
+
+func normalizeName(input string) (string, error) {
+	name := strings.TrimSpace(input)
+	if name == "" {
+		return "", fmt.Errorf("name is required")
+	}
+	return strings.ToLower(name), nil
+}
+
 func main() {
-	var wg sync.WaitGroup
-	done := make(chan string, 1)
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		done <- "Parallel Tests"
-	}()
-	wg.Wait()
-	fmt.Println(<-done)
+	name, err := normalizeName("  Asha  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("normalized value: %s\n", name)
 }

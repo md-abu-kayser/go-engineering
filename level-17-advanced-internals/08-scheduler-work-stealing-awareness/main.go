@@ -1,12 +1,20 @@
+// Lesson 08: Scheduler Work Stealing Awareness
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func SchedulerWorkStealingAwareness() string {
-	const topic = "Scheduler Work Stealing Awareness"
-	return topic
-}
+const lesson = "Scheduler Work Stealing Awareness"
 
 func main() {
-	fmt.Println(SchedulerWorkStealingAwareness())
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

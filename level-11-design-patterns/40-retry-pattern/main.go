@@ -1,9 +1,30 @@
+// Lesson 40: Retry Pattern
+//
+// Goal: Make a variation point explicit with a small interface, then choose
+// a concrete policy at the composition point.
 package main
 
 import "fmt"
 
-// Retry Pattern is a focused micro-lesson in the Go engineering journey.
+const lesson = "Retry Pattern"
+
+type discount interface {
+	Apply(int) int
+}
+
+type percentageDiscount struct {
+	percent int
+}
+
+func (d percentageDiscount) Apply(price int) int {
+	return price - price*d.percent/100
+}
+
+func checkout(policy discount, price int) int {
+	return policy.Apply(price)
+}
+
 func main() {
-	value := "Retry Pattern"
-	fmt.Printf("lesson=0679 topic=%q\n", value)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("discounted total: %d\n", checkout(percentageDiscount{percent: 15}, 200))
 }

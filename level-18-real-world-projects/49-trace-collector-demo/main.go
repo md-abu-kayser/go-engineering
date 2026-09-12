@@ -1,12 +1,41 @@
+// Lesson 49: Trace Collector Demo
+//
+// Goal: Assemble a tiny vertical slice: validate a request, apply a domain
+// rule, persist it through a focused store, and return the resulting value.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-func TraceCollectorDemo() string {
-	const topic = "Trace Collector Demo"
-	return topic
+const lesson = "Trace Collector Demo"
+
+type item struct {
+	ID   string
+	Name string
+}
+
+type store struct {
+	items map[string]item
+}
+
+func (s *store) Create(id, name string) (item, error) {
+	name = strings.TrimSpace(name)
+	if id == "" || name == "" {
+		return item{}, fmt.Errorf("id and name are required")
+	}
+	created := item{ID: id, Name: name}
+	s.items[id] = created
+	return created, nil
 }
 
 func main() {
-	fmt.Println(TraceCollectorDemo())
+	data := store{items: make(map[string]item)}
+	created, err := data.Create("item-1", "first item")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("created: %#v\n", created)
 }

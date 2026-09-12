@@ -1,12 +1,20 @@
+// Lesson 44: Trace Task
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func TraceTask() string {
-	const topic = "Trace Task"
-	return topic
-}
+const lesson = "Trace Task"
 
 func main() {
-	fmt.Println(TraceTask())
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

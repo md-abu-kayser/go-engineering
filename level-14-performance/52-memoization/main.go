@@ -1,9 +1,23 @@
+// Lesson 52: Memoization
+//
+// Goal: Make the allocation decision visible: preallocate the exact output
+// size and keep the hot loop free of formatting and interface conversion.
 package main
 
 import "fmt"
 
-// Memoization is a focused micro-lesson in the Go engineering journey.
+const lesson = "Memoization"
+
+func double(values []int) []int {
+	output := make([]int, len(values))
+	for index, value := range values {
+		output[index] = value * 2
+	}
+	return output
+}
+
 func main() {
-	value := "Memoization"
-	fmt.Printf("lesson=0865 topic=%q\n", value)
+	input := []int{1, 2, 3, 4}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("input: %v output: %v\n", input, double(input))
 }

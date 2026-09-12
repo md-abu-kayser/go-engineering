@@ -1,9 +1,28 @@
+// Lesson 53: Test Helper Packages
+//
+// Goal: Keep a package boundary narrow by depending on the behavior a
+// consumer needs rather than a concrete infrastructure type.
 package main
 
 import "fmt"
 
+const lesson = "Test Helper Packages"
+
+type notifier interface {
+	Send(string) string
+}
+
+type consoleNotifier struct{}
+
+func (consoleNotifier) Send(message string) string {
+	return "sent: " + message
+}
+
+func notify(n notifier, message string) string {
+	return n.Send(message)
+}
+
 func main() {
-	input := "Test Helper Packages"
-	result := len(input) > 0
-	fmt.Printf("subject=%q passes-basic-check=%t\n", input, result)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(notify(consoleNotifier{}, "package boundaries stay replaceable"))
 }

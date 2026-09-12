@@ -1,16 +1,25 @@
+// Lesson 53: Api Gateway Boundary
+//
+// Goal: Separate deployment configuration from application behavior and make
+// readiness a small, testable decision rather than an implicit side effect.
 package main
 
-import (
-	"fmt"
-	"net/http"
-)
+import "fmt"
 
-func handlerApiGatewayBoundary(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	_, _ = fmt.Fprint(w, "Api Gateway Boundary")
+const lesson = "Api Gateway Boundary"
+
+type deployment struct {
+	Name     string
+	Replicas int
+	Database bool
+}
+
+func (d deployment) Ready() bool {
+	return d.Name != "" && d.Replicas > 0 && d.Database
 }
 
 func main() {
-	h := http.HandlerFunc(handlerApiGatewayBoundary)
-	fmt.Printf("handler=%T topic=Api Gateway Boundary\n", h)
+	service := deployment{Name: "catalog", Replicas: 3, Database: true}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("%s ready: %t\n", service.Name, service.Ready())
 }

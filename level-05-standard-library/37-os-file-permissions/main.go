@@ -1,13 +1,36 @@
+// Lesson 37: Os File Permissions
+//
+// Goal: Combine focused standard-library packages to transform a value
+// without introducing an application dependency.
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"strings"
+)
 
-func summarizeOsFilePermissions() (string, int) {
-	topic := "Os File Permissions"
-	return topic, len(topic)
+const lesson = "Os File Permissions"
+
+type report struct {
+	Words []string `json:"words"`
+	Count int      `json:"count"`
+}
+
+func summarize(input string) (report, error) {
+	words := strings.Fields(strings.ToLower(input))
+	return report{Words: words, Count: len(words)}, nil
 }
 
 func main() {
-	topic, length := summarizeOsFilePermissions()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	value, err := summarize("Go keeps standard-library tools close at hand")
+	if err != nil {
+		panic(err)
+	}
+	encoded, err := json.Marshal(value)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(string(encoded))
 }

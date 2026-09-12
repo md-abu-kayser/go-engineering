@@ -1,12 +1,30 @@
+// Lesson 02: Abstract Factory In Go
+//
+// Goal: Make a variation point explicit with a small interface, then choose
+// a concrete policy at the composition point.
 package main
 
 import "fmt"
 
-func AbstractFactoryInGo() string {
-	const topic = "Abstract Factory In Go"
-	return topic
+const lesson = "Abstract Factory In Go"
+
+type discount interface {
+	Apply(int) int
+}
+
+type percentageDiscount struct {
+	percent int
+}
+
+func (d percentageDiscount) Apply(price int) int {
+	return price - price*d.percent/100
+}
+
+func checkout(policy discount, price int) int {
+	return policy.Apply(price)
 }
 
 func main() {
-	fmt.Println(AbstractFactoryInGo())
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("discounted total: %d\n", checkout(percentageDiscount{percent: 15}, 200))
 }

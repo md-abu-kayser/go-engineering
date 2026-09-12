@@ -1,13 +1,25 @@
+// Lesson 50: Secrets Manager Boundary
+//
+// Goal: Separate deployment configuration from application behavior and make
+// readiness a small, testable decision rather than an implicit side effect.
 package main
 
 import "fmt"
 
-func summarizeSecretsManagerBoundary() (string, int) {
-	topic := "Secrets Manager Boundary"
-	return topic, len(topic)
+const lesson = "Secrets Manager Boundary"
+
+type deployment struct {
+	Name     string
+	Replicas int
+	Database bool
+}
+
+func (d deployment) Ready() bool {
+	return d.Name != "" && d.Replicas > 0 && d.Database
 }
 
 func main() {
-	topic, length := summarizeSecretsManagerBoundary()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	service := deployment{Name: "catalog", Replicas: 3, Database: true}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("%s ready: %t\n", service.Name, service.Ready())
 }

@@ -1,13 +1,29 @@
+// Lesson 55: Gossip Awareness
+//
+// Goal: Put a message in an explicit envelope so a receiver can correlate,
+// deduplicate, and evolve data independently of transport details.
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
-func summarizeGossipAwareness() (string, int) {
-	topic := "Gossip Awareness"
-	return topic, len(topic)
+const lesson = "Gossip Awareness"
+
+type envelope struct {
+	ID      string `json:"id"`
+	Type    string `json:"type"`
+	Version int    `json:"version"`
+	Payload string `json:"payload"`
 }
 
 func main() {
-	topic, length := summarizeGossipAwareness()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	message := envelope{ID: "evt-42", Type: "order.created", Version: 1, Payload: "order-7"}
+	encoded, err := json.Marshal(message)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(string(encoded))
 }

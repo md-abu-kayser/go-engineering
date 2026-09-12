@@ -1,18 +1,20 @@
+// Lesson 07: Scheduler Goroutine Model
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
 import (
 	"fmt"
-	"sync"
+	"runtime"
 )
 
+const lesson = "Scheduler Goroutine Model"
+
 func main() {
-	var wg sync.WaitGroup
-	done := make(chan string, 1)
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		done <- "Scheduler Goroutine Model"
-	}()
-	wg.Wait()
-	fmt.Println(<-done)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

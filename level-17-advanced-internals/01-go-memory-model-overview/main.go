@@ -1,9 +1,20 @@
+// Lesson 01: Go Memory Model Overview
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-// Go Memory Model Overview is a focused micro-lesson in the Go engineering journey.
+const lesson = "Go Memory Model Overview"
+
 func main() {
-	value := "Go Memory Model Overview"
-	fmt.Printf("lesson=0988 topic=%q\n", value)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

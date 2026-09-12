@@ -1,9 +1,29 @@
+// Lesson 32: At Most Once Delivery
+//
+// Goal: Put a message in an explicit envelope so a receiver can correlate,
+// deduplicate, and evolve data independently of transport details.
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
-// At Most Once Delivery is a focused micro-lesson in the Go engineering journey.
+const lesson = "At Most Once Delivery"
+
+type envelope struct {
+	ID      string `json:"id"`
+	Type    string `json:"type"`
+	Version int    `json:"version"`
+	Payload string `json:"payload"`
+}
+
 func main() {
-	value := "At Most Once Delivery"
-	fmt.Printf("lesson=0903 topic=%q\n", value)
+	message := envelope{ID: "evt-42", Type: "order.created", Version: 1, Payload: "order-7"}
+	encoded, err := json.Marshal(message)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(string(encoded))
 }

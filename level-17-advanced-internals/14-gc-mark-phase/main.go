@@ -1,12 +1,20 @@
+// Lesson 14: Gc Mark Phase
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func GcMarkPhase() string {
-	const topic = "Gc Mark Phase"
-	return topic
-}
+const lesson = "Gc Mark Phase"
 
 func main() {
-	fmt.Println(GcMarkPhase())
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

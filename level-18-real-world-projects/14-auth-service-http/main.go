@@ -1,16 +1,41 @@
+// Lesson 14: Auth Service Http
+//
+// Goal: Assemble a tiny vertical slice: validate a request, apply a domain
+// rule, persist it through a focused store, and return the resulting value.
 package main
 
 import (
 	"fmt"
-	"net/http"
+	"strings"
 )
 
-func handlerAuthServiceHttp(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	_, _ = fmt.Fprint(w, "Auth Service Http")
+const lesson = "Auth Service Http"
+
+type item struct {
+	ID   string
+	Name string
+}
+
+type store struct {
+	items map[string]item
+}
+
+func (s *store) Create(id, name string) (item, error) {
+	name = strings.TrimSpace(name)
+	if id == "" || name == "" {
+		return item{}, fmt.Errorf("id and name are required")
+	}
+	created := item{ID: id, Name: name}
+	s.items[id] = created
+	return created, nil
 }
 
 func main() {
-	h := http.HandlerFunc(handlerAuthServiceHttp)
-	fmt.Printf("handler=%T topic=Auth Service Http\n", h)
+	data := store{items: make(map[string]item)}
+	created, err := data.Create("item-1", "first item")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("created: %#v\n", created)
 }

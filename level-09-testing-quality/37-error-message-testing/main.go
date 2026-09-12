@@ -1,18 +1,29 @@
+// Lesson 37: Error Message Testing
+//
+// Goal: Put behavior in a small pure function so a table-driven test,
+// benchmark, fuzz target, or example test can exercise it deterministically.
 package main
 
 import (
-	"errors"
 	"fmt"
+	"strings"
 )
 
-var errExample = errors.New("example failure")
+const lesson = "Error Message Testing"
 
-func main() {
-	if err := validate(); err != nil {
-		fmt.Printf("Error Message Testing: %v\n", err)
+func normalizeName(input string) (string, error) {
+	name := strings.TrimSpace(input)
+	if name == "" {
+		return "", fmt.Errorf("name is required")
 	}
+	return strings.ToLower(name), nil
 }
 
-func validate() error {
-	return errExample
+func main() {
+	name, err := normalizeName("  Asha  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("normalized value: %s\n", name)
 }

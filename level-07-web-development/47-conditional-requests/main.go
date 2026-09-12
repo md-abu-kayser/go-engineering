@@ -1,9 +1,28 @@
+// Lesson 47: Conditional Requests
+//
+// Goal: Exercise an HTTP handler in memory, including its status, headers,
+// and JSON response, instead of binding a port for a teaching example.
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"net/http/httptest"
+)
 
-// Conditional Requests is a focused micro-lesson in the Go engineering journey.
+const lesson = "Conditional Requests"
+
+func greetingHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"message": "hello, " + r.URL.Query().Get("name")})
+}
+
 func main() {
-	value := "Conditional Requests"
-	fmt.Printf("lesson=0452 topic=%q\n", value)
+	request := httptest.NewRequest(http.MethodGet, "/greeting?name=Asha", nil)
+	recorder := httptest.NewRecorder()
+	greetingHandler(recorder, request)
+
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("status: %d body: %s", recorder.Code, recorder.Body.String())
 }

@@ -1,13 +1,23 @@
+// Lesson 21: Alloc Profile
+//
+// Goal: Make the allocation decision visible: preallocate the exact output
+// size and keep the hot loop free of formatting and interface conversion.
 package main
 
 import "fmt"
 
-func summarizeAllocProfile() (string, int) {
-	topic := "Alloc Profile"
-	return topic, len(topic)
+const lesson = "Alloc Profile"
+
+func double(values []int) []int {
+	output := make([]int, len(values))
+	for index, value := range values {
+		output[index] = value * 2
+	}
+	return output
 }
 
 func main() {
-	topic, length := summarizeAllocProfile()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	input := []int{1, 2, 3, 4}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("input: %v output: %v\n", input, double(input))
 }

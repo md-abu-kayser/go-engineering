@@ -1,12 +1,27 @@
+// Lesson 16: Frame Ancestors
+//
+// Goal: Validate untrusted input at a boundary and compare authentication
+// material in constant time rather than relying on ordinary string equality.
 package main
 
-import "fmt"
+import (
+	"crypto/subtle"
+	"fmt"
+	"strings"
+)
 
-func FrameAncestors() string {
-	const topic = "Frame Ancestors"
-	return topic
+const lesson = "Frame Ancestors"
+
+func validToken(token string) bool {
+	if len(token) != 12 || strings.ContainsAny(token, " \t\n") {
+		return false
+	}
+	expected := "safe-token-1"
+	return subtle.ConstantTimeCompare([]byte(token), []byte(expected)) == 1
 }
 
 func main() {
-	fmt.Println(FrameAncestors())
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("accepted: %t\n", validToken("safe-token-1"))
+	fmt.Printf("rejected: %t\n", validToken("not-a-token!"))
 }

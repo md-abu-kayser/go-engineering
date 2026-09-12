@@ -1,13 +1,20 @@
+// Lesson 18: Escape Analysis Example
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func summarizeEscapeAnalysisExample() (string, int) {
-	topic := "Escape Analysis Example"
-	return topic, len(topic)
-}
+const lesson = "Escape Analysis Example"
 
 func main() {
-	topic, length := summarizeEscapeAnalysisExample()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

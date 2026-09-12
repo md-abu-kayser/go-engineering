@@ -1,13 +1,23 @@
+// Lesson 27: Gc Percent
+//
+// Goal: Make the allocation decision visible: preallocate the exact output
+// size and keep the hot loop free of formatting and interface conversion.
 package main
 
 import "fmt"
 
-func summarizeGcPercent() (string, int) {
-	topic := "Gc Percent"
-	return topic, len(topic)
+const lesson = "Gc Percent"
+
+func double(values []int) []int {
+	output := make([]int, len(values))
+	for index, value := range values {
+		output[index] = value * 2
+	}
+	return output
 }
 
 func main() {
-	topic, length := summarizeGcPercent()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	input := []int{1, 2, 3, 4}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("input: %v output: %v\n", input, double(input))
 }

@@ -1,9 +1,27 @@
+// Lesson 06: Crypto Rand Tokens
+//
+// Goal: Validate untrusted input at a boundary and compare authentication
+// material in constant time rather than relying on ordinary string equality.
 package main
 
-import "fmt"
+import (
+	"crypto/subtle"
+	"fmt"
+	"strings"
+)
 
-// Crypto Rand Tokens is a focused micro-lesson in the Go engineering journey.
+const lesson = "Crypto Rand Tokens"
+
+func validToken(token string) bool {
+	if len(token) != 12 || strings.ContainsAny(token, " \t\n") {
+		return false
+	}
+	expected := "safe-token-1"
+	return subtle.ConstantTimeCompare([]byte(token), []byte(expected)) == 1
+}
+
 func main() {
-	value := "Crypto Rand Tokens"
-	fmt.Printf("lesson=0761 topic=%q\n", value)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("accepted: %t\n", validToken("safe-token-1"))
+	fmt.Printf("rejected: %t\n", validToken("not-a-token!"))
 }

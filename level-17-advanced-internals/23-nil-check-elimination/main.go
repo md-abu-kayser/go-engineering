@@ -1,12 +1,20 @@
+// Lesson 23: Nil Check Elimination
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func NilCheckElimination() string {
-	const topic = "Nil Check Elimination"
-	return topic
-}
+const lesson = "Nil Check Elimination"
 
 func main() {
-	fmt.Println(NilCheckElimination())
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

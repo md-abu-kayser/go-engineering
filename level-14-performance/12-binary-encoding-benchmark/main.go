@@ -1,19 +1,23 @@
+// Lesson 12: Binary Encoding Benchmark
+//
+// Goal: Make the allocation decision visible: preallocate the exact output
+// size and keep the hot loop free of formatting and interface conversion.
 package main
 
-import (
-	"encoding/json"
-	"fmt"
-)
+import "fmt"
 
-type lesson struct {
-	Topic string `json:"topic"`
-	Level int    `json:"level"`
+const lesson = "Binary Encoding Benchmark"
+
+func double(values []int) []int {
+	output := make([]int, len(values))
+	for index, value := range values {
+		output[index] = value * 2
+	}
+	return output
 }
 
 func main() {
-	b, err := json.Marshal(lesson{Topic: "Binary Encoding Benchmark", Level: 14})
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(string(b))
+	input := []int{1, 2, 3, 4}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("input: %v output: %v\n", input, double(input))
 }

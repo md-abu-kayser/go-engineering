@@ -1,12 +1,30 @@
+// Lesson 38: Circuit Breaker Pattern
+//
+// Goal: Make a variation point explicit with a small interface, then choose
+// a concrete policy at the composition point.
 package main
 
 import "fmt"
 
-func CircuitBreakerPattern() string {
-	const topic = "Circuit Breaker Pattern"
-	return topic
+const lesson = "Circuit Breaker Pattern"
+
+type discount interface {
+	Apply(int) int
+}
+
+type percentageDiscount struct {
+	percent int
+}
+
+func (d percentageDiscount) Apply(price int) int {
+	return price - price*d.percent/100
+}
+
+func checkout(policy discount, price int) int {
+	return policy.Apply(price)
 }
 
 func main() {
-	fmt.Println(CircuitBreakerPattern())
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("discounted total: %d\n", checkout(percentageDiscount{percent: 15}, 200))
 }

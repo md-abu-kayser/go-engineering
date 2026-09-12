@@ -1,11 +1,23 @@
+// Lesson 05: Preallocation
+//
+// Goal: Make the allocation decision visible: preallocate the exact output
+// size and keep the hot loop free of formatting and interface conversion.
 package main
 
 import "fmt"
 
-func main() {
-	values := make([]int, 0, 4)
-	for i := 1; i <= 4; i++ {
-		values = append(values, i*i)
+const lesson = "Preallocation"
+
+func double(values []int) []int {
+	output := make([]int, len(values))
+	for index, value := range values {
+		output[index] = value * 2
 	}
-	fmt.Printf("Preallocation: %v len=%d cap=%d\n", values, len(values), cap(values))
+	return output
+}
+
+func main() {
+	input := []int{1, 2, 3, 4}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("input: %v output: %v\n", input, double(input))
 }

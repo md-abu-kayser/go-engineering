@@ -1,12 +1,32 @@
+// Lesson 28: Stdout Streaming
+//
+// Goal: Parse a command option through an isolated FlagSet so the command
+// can be exercised without changing the process-wide flag state.
 package main
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+	"io"
+)
 
-func StdoutStreaming() string {
-	const topic = "Stdout Streaming"
-	return topic
+const lesson = "Stdout Streaming"
+
+func parse(args []string) (string, error) {
+	set := flag.NewFlagSet("lesson", flag.ContinueOnError)
+	set.SetOutput(io.Discard)
+	name := set.String("name", "engineer", "name to greet")
+	if err := set.Parse(args); err != nil {
+		return "", err
+	}
+	return *name, nil
 }
 
 func main() {
-	fmt.Println(StdoutStreaming())
+	name, err := parse([]string{"-name", "Asha"})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("hello, %s\n", name)
 }

@@ -1,13 +1,20 @@
+// Lesson 09: Gmp Model Awareness
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func summarizeGmpModelAwareness() (string, int) {
-	topic := "Gmp Model Awareness"
-	return topic, len(topic)
-}
+const lesson = "Gmp Model Awareness"
 
 func main() {
-	topic, length := summarizeGmpModelAwareness()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

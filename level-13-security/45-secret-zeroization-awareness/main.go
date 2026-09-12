@@ -1,9 +1,27 @@
+// Lesson 45: Secret Zeroization Awareness
+//
+// Goal: Validate untrusted input at a boundary and compare authentication
+// material in constant time rather than relying on ordinary string equality.
 package main
 
-import "fmt"
+import (
+	"crypto/subtle"
+	"fmt"
+	"strings"
+)
 
-// Secret Zeroization Awareness is a focused micro-lesson in the Go engineering journey.
+const lesson = "Secret Zeroization Awareness"
+
+func validToken(token string) bool {
+	if len(token) != 12 || strings.ContainsAny(token, " \t\n") {
+		return false
+	}
+	expected := "safe-token-1"
+	return subtle.ConstantTimeCompare([]byte(token), []byte(expected)) == 1
+}
+
 func main() {
-	value := "Secret Zeroization Awareness"
-	fmt.Printf("lesson=0800 topic=%q\n", value)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("accepted: %t\n", validToken("safe-token-1"))
+	fmt.Printf("rejected: %t\n", validToken("not-a-token!"))
 }

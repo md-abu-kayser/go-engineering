@@ -1,18 +1,27 @@
+// Lesson 20: Input Validation
+//
+// Goal: Validate untrusted input at a boundary and compare authentication
+// material in constant time rather than relying on ordinary string equality.
 package main
 
 import (
-	"errors"
+	"crypto/subtle"
 	"fmt"
+	"strings"
 )
 
-var errExample = errors.New("example failure")
+const lesson = "Input Validation"
 
-func main() {
-	if err := validate(); err != nil {
-		fmt.Printf("Input Validation: %v\n", err)
+func validToken(token string) bool {
+	if len(token) != 12 || strings.ContainsAny(token, " \t\n") {
+		return false
 	}
+	expected := "safe-token-1"
+	return subtle.ConstantTimeCompare([]byte(token), []byte(expected)) == 1
 }
 
-func validate() error {
-	return errExample
+func main() {
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("accepted: %t\n", validToken("safe-token-1"))
+	fmt.Printf("rejected: %t\n", validToken("not-a-token!"))
 }

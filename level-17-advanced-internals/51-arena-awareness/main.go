@@ -1,13 +1,20 @@
+// Lesson 51: Arena Awareness
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func summarizeArenaAwareness() (string, int) {
-	topic := "Arena Awareness"
-	return topic, len(topic)
-}
+const lesson = "Arena Awareness"
 
 func main() {
-	topic, length := summarizeArenaAwareness()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

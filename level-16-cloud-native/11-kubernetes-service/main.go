@@ -1,13 +1,25 @@
+// Lesson 11: Kubernetes Service
+//
+// Goal: Separate deployment configuration from application behavior and make
+// readiness a small, testable decision rather than an implicit side effect.
 package main
 
 import "fmt"
 
-func summarizeKubernetesService() (string, int) {
-	topic := "Kubernetes Service"
-	return topic, len(topic)
+const lesson = "Kubernetes Service"
+
+type deployment struct {
+	Name     string
+	Replicas int
+	Database bool
+}
+
+func (d deployment) Ready() bool {
+	return d.Name != "" && d.Replicas > 0 && d.Database
 }
 
 func main() {
-	topic, length := summarizeKubernetesService()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	service := deployment{Name: "catalog", Replicas: 3, Database: true}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("%s ready: %t\n", service.Name, service.Ready())
 }

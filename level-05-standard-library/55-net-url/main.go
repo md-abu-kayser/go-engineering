@@ -1,13 +1,36 @@
+// Lesson 55: Net Url
+//
+// Goal: Combine focused standard-library packages to transform a value
+// without introducing an application dependency.
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"strings"
+)
 
-func summarizeNetUrl() (string, int) {
-	topic := "Net Url"
-	return topic, len(topic)
+const lesson = "Net Url"
+
+type report struct {
+	Words []string `json:"words"`
+	Count int      `json:"count"`
+}
+
+func summarize(input string) (report, error) {
+	words := strings.Fields(strings.ToLower(input))
+	return report{Words: words, Count: len(words)}, nil
 }
 
 func main() {
-	topic, length := summarizeNetUrl()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	value, err := summarize("Go keeps standard-library tools close at hand")
+	if err != nil {
+		panic(err)
+	}
+	encoded, err := json.Marshal(value)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(string(encoded))
 }

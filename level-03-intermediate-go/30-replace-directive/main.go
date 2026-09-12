@@ -1,12 +1,25 @@
+// Lesson 30: Replace Directive
+//
+// Goal: Model an explicit dependency boundary. Real module and build-tool
+// commands belong outside application code; the application consumes an
+// already-validated configuration value.
 package main
 
 import "fmt"
 
-func ReplaceDirective() string {
-	const topic = "Replace Directive"
-	return topic
+const lesson = "Replace Directive"
+
+type dependency struct {
+	Path    string
+	Version string
+}
+
+func (d dependency) Valid() bool {
+	return d.Path != "" && d.Version != ""
 }
 
 func main() {
-	fmt.Println(ReplaceDirective())
+	dep := dependency{Path: "example.com/catalog", Version: "v1.4.0"}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("%s at %s is valid: %t\n", dep.Path, dep.Version, dep.Valid())
 }

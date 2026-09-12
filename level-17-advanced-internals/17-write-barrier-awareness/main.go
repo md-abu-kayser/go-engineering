@@ -1,12 +1,20 @@
+// Lesson 17: Write Barrier Awareness
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-func WriteBarrierAwareness() string {
-	const topic = "Write Barrier Awareness"
-	return topic
-}
+const lesson = "Write Barrier Awareness"
 
 func main() {
-	fmt.Println(WriteBarrierAwareness())
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

@@ -1,9 +1,20 @@
+// Lesson 43: Trace Region
+//
+// Goal: Use safe, public runtime APIs to observe a runtime property. The
+// program explains a runtime concern without coupling application code to
+// undocumented implementation details.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
-// Trace Region is a focused micro-lesson in the Go engineering journey.
+const lesson = "Trace Region"
+
 func main() {
-	value := "Trace Region"
-	fmt.Printf("lesson=1030 topic=%q\n", value)
+	var stats runtime.MemStats
+	runtime.ReadMemStats(&stats)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("goroutines: %d heap objects: %d\n", runtime.NumGoroutine(), stats.HeapObjects)
 }

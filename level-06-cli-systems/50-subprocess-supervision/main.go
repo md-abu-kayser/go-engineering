@@ -1,13 +1,32 @@
+// Lesson 50: Subprocess Supervision
+//
+// Goal: Parse a command option through an isolated FlagSet so the command
+// can be exercised without changing the process-wide flag state.
 package main
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+	"io"
+)
 
-func summarizeSubprocessSupervision() (string, int) {
-	topic := "Subprocess Supervision"
-	return topic, len(topic)
+const lesson = "Subprocess Supervision"
+
+func parse(args []string) (string, error) {
+	set := flag.NewFlagSet("lesson", flag.ContinueOnError)
+	set.SetOutput(io.Discard)
+	name := set.String("name", "engineer", "name to greet")
+	if err := set.Parse(args); err != nil {
+		return "", err
+	}
+	return *name, nil
 }
 
 func main() {
-	topic, length := summarizeSubprocessSupervision()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	name, err := parse([]string{"-name", "Asha"})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("hello, %s\n", name)
 }

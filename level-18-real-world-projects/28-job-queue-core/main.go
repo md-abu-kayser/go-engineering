@@ -1,12 +1,41 @@
+// Lesson 28: Job Queue Core
+//
+// Goal: Assemble a tiny vertical slice: validate a request, apply a domain
+// rule, persist it through a focused store, and return the resulting value.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-func JobQueueCore() string {
-	const topic = "Job Queue Core"
-	return topic
+const lesson = "Job Queue Core"
+
+type item struct {
+	ID   string
+	Name string
+}
+
+type store struct {
+	items map[string]item
+}
+
+func (s *store) Create(id, name string) (item, error) {
+	name = strings.TrimSpace(name)
+	if id == "" || name == "" {
+		return item{}, fmt.Errorf("id and name are required")
+	}
+	created := item{ID: id, Name: name}
+	s.items[id] = created
+	return created, nil
 }
 
 func main() {
-	fmt.Println(JobQueueCore())
+	data := store{items: make(map[string]item)}
+	created, err := data.Create("item-1", "first item")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("created: %#v\n", created)
 }

@@ -1,16 +1,28 @@
+// Lesson 41: Internal Api Boundaries
+//
+// Goal: Keep a package boundary narrow by depending on the behavior a
+// consumer needs rather than a concrete infrastructure type.
 package main
 
-import (
-	"fmt"
-	"net/http"
-)
+import "fmt"
 
-func handlerInternalApiBoundaries(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	_, _ = fmt.Fprint(w, "Internal Api Boundaries")
+const lesson = "Internal Api Boundaries"
+
+type notifier interface {
+	Send(string) string
+}
+
+type consoleNotifier struct{}
+
+func (consoleNotifier) Send(message string) string {
+	return "sent: " + message
+}
+
+func notify(n notifier, message string) string {
+	return n.Send(message)
 }
 
 func main() {
-	h := http.HandlerFunc(handlerInternalApiBoundaries)
-	fmt.Printf("handler=%T topic=Internal Api Boundaries\n", h)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(notify(consoleNotifier{}, "package boundaries stay replaceable"))
 }

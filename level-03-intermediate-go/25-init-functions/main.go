@@ -1,13 +1,25 @@
+// Lesson 25: Init Functions
+//
+// Goal: Model an explicit dependency boundary. Real module and build-tool
+// commands belong outside application code; the application consumes an
+// already-validated configuration value.
 package main
 
 import "fmt"
 
-func summarizeInitFunctions() (string, int) {
-	topic := "Init Functions"
-	return topic, len(topic)
+const lesson = "Init Functions"
+
+type dependency struct {
+	Path    string
+	Version string
+}
+
+func (d dependency) Valid() bool {
+	return d.Path != "" && d.Version != ""
 }
 
 func main() {
-	topic, length := summarizeInitFunctions()
-	fmt.Printf("%s (%d chars)\n", topic, length)
+	dep := dependency{Path: "example.com/catalog", Version: "v1.4.0"}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("%s at %s is valid: %t\n", dep.Path, dep.Version, dep.Valid())
 }

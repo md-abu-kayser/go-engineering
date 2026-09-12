@@ -1,9 +1,30 @@
+// Lesson 13: Pub Sub Pattern
+//
+// Goal: Make a variation point explicit with a small interface, then choose
+// a concrete policy at the composition point.
 package main
 
 import "fmt"
 
-// Pub Sub Pattern is a focused micro-lesson in the Go engineering journey.
+const lesson = "Pub Sub Pattern"
+
+type discount interface {
+	Apply(int) int
+}
+
+type percentageDiscount struct {
+	percent int
+}
+
+func (d percentageDiscount) Apply(price int) int {
+	return price - price*d.percent/100
+}
+
+func checkout(policy discount, price int) int {
+	return policy.Apply(price)
+}
+
 func main() {
-	value := "Pub Sub Pattern"
-	fmt.Printf("lesson=0652 topic=%q\n", value)
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("discounted total: %d\n", checkout(percentageDiscount{percent: 15}, 200))
 }

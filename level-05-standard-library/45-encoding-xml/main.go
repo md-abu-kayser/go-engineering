@@ -1,19 +1,36 @@
+// Lesson 45: Encoding Xml
+//
+// Goal: Combine focused standard-library packages to transform a value
+// without introducing an application dependency.
 package main
 
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 )
 
-type lesson struct {
-	Topic string `json:"topic"`
-	Level int    `json:"level"`
+const lesson = "Encoding Xml"
+
+type report struct {
+	Words []string `json:"words"`
+	Count int      `json:"count"`
+}
+
+func summarize(input string) (report, error) {
+	words := strings.Fields(strings.ToLower(input))
+	return report{Words: words, Count: len(words)}, nil
 }
 
 func main() {
-	b, err := json.Marshal(lesson{Topic: "Encoding Xml", Level: 5})
+	value, err := summarize("Go keeps standard-library tools close at hand")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(string(b))
+	encoded, err := json.Marshal(value)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Println(string(encoded))
 }

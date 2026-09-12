@@ -1,9 +1,25 @@
+// Lesson 38: Go Generate
+//
+// Goal: Model an explicit dependency boundary. Real module and build-tool
+// commands belong outside application code; the application consumes an
+// already-validated configuration value.
 package main
 
 import "fmt"
 
-// Go Generate is a focused micro-lesson in the Go engineering journey.
+const lesson = "Go Generate"
+
+type dependency struct {
+	Path    string
+	Version string
+}
+
+func (d dependency) Valid() bool {
+	return d.Path != "" && d.Version != ""
+}
+
 func main() {
-	value := "Go Generate"
-	fmt.Printf("lesson=0213 topic=%q\n", value)
+	dep := dependency{Path: "example.com/catalog", Version: "v1.4.0"}
+	fmt.Printf("=== %s ===\n", lesson)
+	fmt.Printf("%s at %s is valid: %t\n", dep.Path, dep.Version, dep.Valid())
 }
